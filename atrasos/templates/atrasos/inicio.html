@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de atrasos docentes</title>
+
+    <style>
+        :root{
+            --fondo:#f4f6f9;
+            --card:#ffffff;
+            --linea:#e5e7eb;
+            --texto:#1f2937;
+            --suave:#6b7280;
+            --marca:#b91c1c;
+
+            --verde-fondo:#dcfce7;
+            --verde-texto:#166534;
+
+            --amarillo-fondo:#fef3c7;
+            --amarillo-texto:#92400e;
+
+            --naranjo-fondo:#ffedd5;
+            --naranjo-texto:#9a3412;
+
+            --rojo-fondo:#fee2e2;
+            --rojo-texto:#991b1b;
+
+            --gris-fondo:#e5e7eb;
+            --gris-texto:#374151;
+
+            --sombra:0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        *{
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family: Arial, sans-serif;
+            background:var(--fondo);
+            margin:0;
+            padding:0;
+            color:var(--texto);
+        }
+
+        .contenedor{
+            max-width:1280px;
+            margin:30px auto;
+            padding:20px;
+        }
+
+        .card{
+            background:var(--card);
+            border-radius:18px;
+            padding:24px;
+            box-shadow:var(--sombra);
+            margin-bottom:20px;
+        }
+
+        h1{
+            margin:0 0 8px 0;
+            color:var(--marca);
+            font-size:52px;
+            line-height:1.05;
+        }
+
+        h2, h3{
+            margin-top:0;
+        }
+
+        .subtitulo{
+            color:var(--suave);
+            margin:0;
+            font-size:16px;
+            line-height:1.5;
+            max-width:900px;
+        }
+
+        .cabecera{
+            display:flex;
+            align-items:flex-start;
+            justify-content:space-between;
+            gap:20px;
+        }
+
+        .cabecera-badge{
+            background:#fff5f5;
+            color:var(--marca);
+            border:1px solid #fecaca;
+            padding:10px 14px;
+            border-radius:999px;
+            font-size:13px;
+            font-weight:bold;
+            white-space:nowrap;
+        }
+
+        .formulario-grid{
+            display:grid;
+            grid-template-columns:2fr 1fr auto;
+            gap:14px;
+            align-items:end;
+        }
+
+        .campo label{
+            display:block;
+            font-size:13px;
+            font-weight:bold;
+            color:#374151;
+            margin-bottom:6px;
+        }
+
+        .campo input[type="file"],
+        .campo select,
+        .campo input[type="text"]{
+            width:100%;
+            padding:12px;
+            border:1px solid var(--linea);
+            border-radius:10px;
+            background:#fff;
+            font-size:14px;
+        }
+
+        .boton{
+            display:inline-block;
+            padding:12px 18px;
+            background:var(--marca);
+            color:white;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            font-weight:bold;
+            min-width:170px;
+            height:46px;
+        }
+
+        .boton-secundario{
+            background:#f3f4f6;
+            color:#111827;
+            border:1px solid var(--linea);
+        }
+
+        .boton:hover{
+            background:#991b1b;
+        }
+
+        .boton-secundario:hover{
+            background:#e5e7eb;
+        }
+
+        .mensaje{
+            margin-top:15px;
+            padding:14px 16px;
+            border-radius:10px;
+            font-size:14px;
+        }
+
+        .ok{
+            background:#e6f9ee;
+            color:#047857;
+        }
+
+        .error{
+            background:#fee2e2;
+            color:#991b1b;
+        }
+
+        .kpis{
+            display:grid;
+            grid-template-columns:repeat(5, 1fr);
+            gap:15px;
+        }
+
+        .kpi{
+            background:#f9fafb;
+            border:1px solid var(--linea);
+            border-radius:14px;
+            padding:18px;
+            text-align:center;
+        }
+
+        .kpi-valor{
+            font-size:34px;
+            font-weight:bold;
+            margin-bottom:6px;
+        }
+
+        .kpi-etiqueta{
+            color:#4b5563;
+            font-size:15px;
+        }
+
+        .dos-columnas{
+            display:grid;
+            grid-template-columns:1.2fr 1fr;
+            gap:20px;
+        }
+
+        .filtros-grid{
+            display:grid;
+            grid-template-columns:1.4fr 1fr 1fr 1.2fr auto;
+            gap:12px;
+            align-items:end;
+        }
+
+        .tabla{
+            width:100%;
+            border-collapse:collapse;
+            font-size:13px;
+        }
+
+        .tabla th, .tabla td{
+            border:1px solid var(--linea);
+            padding:10px 10px;
+            text-align:left;
+            vertical-align:top;
+        }
+
+        .tabla th{
+            background:#f3f4f6;
+            position:sticky;
+            top:0;
+            z-index:1;
+        }
+
+        .tabla-contenedor{
+            overflow-x:auto;
+        }
+
+        .tabla-scroll{
+            max-height:520px;
+            overflow:auto;
+            border:1px solid var(--linea);
+            border-radius:12px;
+        }
+
+        .estado,
+        .semaforo{
+            display:inline-block;
+            padding:5px 9px;
+            border-radius:999px;
+            font-size:12px;
+            font-weight:bold;
+            white-space:nowrap;
+        }
+
+        .estado-verde, .semaforo-bajo{
+            background:var(--verde-fondo);
+            color:var(--verde-texto);
+        }
+
+        .estado-amarillo{
+            background:var(--amarillo-fondo);
+            color:var(--amarillo-texto);
+        }
+
+        .estado-naranjo{
+            background:var(--naranjo-fondo);
+            color:var(--naranjo-texto);
+        }
+
+        .estado-rojo, .semaforo-alto{
+            background:var(--rojo-fondo);
+            color:var(--rojo-texto);
+        }
+
+        .estado-gris{
+            background:var(--gris-fondo);
+            color:var(--gris-texto);
+        }
+
+        .semaforo-medio{
+            background:var(--amarillo-fondo);
+            color:var(--amarillo-texto);
+        }
+
+        .texto-suave{
+            color:var(--suave);
+            font-size:14px;
+            line-height:1.5;
+        }
+
+        .insights-grid{
+            display:grid;
+            grid-template-columns:repeat(2, 1fr);
+            gap:16px;
+        }
+
+        .insight{
+            border:1px solid var(--linea);
+            background:#f9fafb;
+            border-radius:14px;
+            padding:16px;
+        }
+
+        .insight h4{
+            margin:0 0 8px 0;
+            font-size:15px;
+            color:#111827;
+        }
+
+        .insight p{
+            margin:0;
+            color:#4b5563;
+            font-size:14px;
+            line-height:1.5;
+        }
+
+        .numero-destacado{
+            font-weight:bold;
+            color:#111827;
+        }
+
+        .sin-datos{
+            padding:20px;
+            text-align:center;
+            color:var(--suave);
+        }
+
+        @media (max-width: 1100px){
+            .kpis{
+                grid-template-columns:repeat(3, 1fr);
+            }
+
+            .dos-columnas{
+                grid-template-columns:1fr;
+            }
+
+            .filtros-grid{
+                grid-template-columns:repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 840px){
+            .formulario-grid{
+                grid-template-columns:1fr;
+            }
+
+            .kpis{
+                grid-template-columns:repeat(2, 1fr);
+            }
+
+            .insights-grid{
+                grid-template-columns:1fr;
+            }
+
+            .cabecera{
+                flex-direction:column;
+            }
+
+            h1{
+                font-size:38px;
+            }
+
+            .filtros-grid{
+                grid-template-columns:1fr;
+            }
+        }
+
+        @media (max-width: 560px){
+            .kpis{
+                grid-template-columns:1fr;
+            }
+
+            .contenedor{
+                margin:15px auto;
+                padding:12px;
+            }
+
+            .card{
+                padding:16px;
+            }
+
+            .kpi-valor{
+                font-size:28px;
+            }
+
+            h1{
+                font-size:32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+
+        <div class="card">
+            <div class="cabecera">
+                <div>
+                    <h1>Control de atrasos docentes</h1>
+                    <p class="subtitulo">
+                        Plataforma de análisis para apoyar decisiones académicas con foco en puntualidad docente.
+                        Procesa archivos Excel en tiempo real usando la tabla oficial de bloques, sin sobrecargar la base de datos.
+                    </p>
+                </div>
+                <div class="cabecera-badge">Modo análisis directivo</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Cargar archivo de libro de clases</h3>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="formulario-grid">
+                    <div class="campo">
+                        <label for="archivo">Archivo Excel</label>
+                        <input id="archivo" type="file" name="archivo" accept=".xls,.xlsx" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="criterio_orden">Ordenar ranking por</label>
+                        <select id="criterio_orden" name="criterio_orden">
+                            <option value="cantidad" {% if criterio_orden == "cantidad" %}selected{% endif %}>Cantidad de atrasos</option>
+                            <option value="minutos" {% if criterio_orden == "minutos" %}selected{% endif %}>Minutos acumulados</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <button class="boton" type="submit">Procesar archivo</button>
+                    </div>
+                </div>
+            </form>
+
+            {% if mensaje %}
+                <div class="mensaje ok">{{ mensaje }}</div>
+            {% endif %}
+
+            {% if error %}
+                <div class="mensaje error">{{ error }}</div>
+            {% endif %}
+        </div>
+
+        {% if total_registros %}
+        {{ detalle_json|json_script:"detalle-datos" }}
+
+        <div class="card">
+            <h3>Resumen ejecutivo</h3>
+
+            <div class="kpis">
+                <div class="kpi">
+                    <div class="kpi-valor" id="kpi-total-registros">{{ total_registros }}</div>
+                    <div class="kpi-etiqueta">Total registros</div>
+                </div>
+
+                <div class="kpi">
+                    <div class="kpi-valor" id="kpi-total-atrasos">{{ total_atrasos }}</div>
+                    <div class="kpi-etiqueta">Total atrasos</div>
+                </div>
+
+                <div class="kpi">
+                    <div class="kpi-valor" id="kpi-total-a-tiempo">{{ total_a_tiempo }}</div>
+                    <div class="kpi-etiqueta">A tiempo</div>
+                </div>
+
+                <div class="kpi">
+                    <div class="kpi-valor" id="kpi-total-sin-retiro">{{ total_sin_retiro }}</div>
+                    <div class="kpi-etiqueta">Sin retiro</div>
+                </div>
+
+                <div class="kpi">
+                    <div class="kpi-valor" id="kpi-promedio-atraso">{{ promedio_atraso }}</div>
+                    <div class="kpi-etiqueta">Promedio atraso (min)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Filtros del análisis</h3>
+
+            <div class="filtros-grid">
+                <div class="campo">
+                    <label for="filtro-texto">Buscar por docente o asignatura</label>
+                    <input id="filtro-texto" type="text" placeholder="Escribe un nombre o asignatura">
+                </div>
+
+                <div class="campo">
+                    <label for="filtro-docente">Docente</label>
+                    <select id="filtro-docente">
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="filtro-seccion">Sección</label>
+                    <select id="filtro-seccion">
+                        <option value="">Todas</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="filtro-estado">Estado</label>
+                    <select id="filtro-estado">
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <button type="button" id="boton-limpiar-filtros" class="boton boton-secundario">
+                        Limpiar filtros
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Insights para toma de decisiones</h3>
+            <div class="insights-grid" id="contenedor-insights">
+                {% for insight in insights %}
+                <div class="insight">
+                    <h4>{{ insight.titulo }}</h4>
+                    <p>{{ insight.texto }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="dos-columnas">
+            <div class="card">
+                <h3>Top docentes con más atraso</h3>
+                <p class="texto-suave">
+                    Ranking ordenado por
+                    <span class="numero-destacado" id="texto-criterio-orden">
+                        {% if criterio_orden == "minutos" %}
+                            minutos acumulados
+                        {% else %}
+                            cantidad de atrasos
+                        {% endif %}
+                    </span>.
+                </p>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla">
+                        <thead>
+                            <tr>
+                                <th>Docente</th>
+                                <th>Cantidad atrasos</th>
+                                <th>Minutos atraso</th>
+                                <th>Impacto</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-top-docentes">
+                            {% for item in top_docentes %}
+                            <tr>
+                                <td>{{ item.docente }}</td>
+                                <td>{{ item.cantidad }}</td>
+                                <td>{{ item.minutos }}</td>
+                                <td>
+                                    <span class="semaforo semaforo-{{ item.semaforo }}">
+                                        {{ item.semaforo_texto }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Lectura ejecutiva</h3>
+                <p class="texto-suave">
+                    Este bloque permite distinguir entre docentes con muchas ocurrencias y docentes con mayor impacto en minutos.
+                    Para decisiones más finas, conviene revisar ambos indicadores en conjunto.
+                </p>
+
+                <div class="insight" style="margin-top:14px;">
+                    <h4>Cómo leer el ranking</h4>
+                    <p>
+                        <strong>Cantidad de atrasos:</strong> muestra recurrencia.<br>
+                        <strong>Minutos atraso:</strong> muestra impacto acumulado.<br>
+                        <strong>Impacto:</strong> resume el nivel de riesgo de gestión.
+                    </p>
+                </div>
+
+                <div class="insight" style="margin-top:14px;">
+                    <h4>Sugerencia directiva</h4>
+                    <p>
+                        Prioriza seguimiento sobre docentes con alto impacto, especialmente si combinan
+                        alta frecuencia y muchos minutos acumulados.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Detalle del análisis</h3>
+            <p class="texto-suave">
+                Se muestran solo registros distintos de “A tiempo”. El detalle se actualiza automáticamente con los filtros.
+            </p>
+
+            <div class="tabla-scroll">
+                <div class="tabla-contenedor">
+                    <table class="tabla">
+                        <thead>
+                            <tr>
+                                <th>Fecha clase</th>
+                                <th>Docente</th>
+                                <th>Asignatura</th>
+                                <th>Sección</th>
+                                <th>Bloque</th>
+                                <th>Hora inicio</th>
+                                <th>Min. atraso</th>
+                                <th>Estado</th>
+                                <th>Observación</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-detalle-analisis">
+                            {% for item in detalle %}
+                                {% if item.estado != "A_TIEMPO" %}
+                                <tr>
+                                    <td>{{ item.fecha_clase_texto }}</td>
+                                    <td>{{ item.docente }}</td>
+                                    <td>{{ item.asignatura|default:"-" }}</td>
+                                    <td>{{ item.seccion|default:"-" }}</td>
+                                    <td>{{ item.bloque_numero|default:"-" }}</td>
+                                    <td>{{ item.hora_inicio_bloque|default:"-" }}</td>
+                                    <td>{{ item.minutos_atraso|default:"-" }}</td>
+                                    <td>
+                                        <span class="estado estado-{{ item.color_estado }}">
+                                            {{ item.estado_texto }}
+                                        </span>
+                                    </td>
+                                    <td>{{ item.observacion }}</td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+    {% if total_registros %}
+    <script>
+        const datosAnalisis = JSON.parse(document.getElementById("detalle-datos").textContent);
+
+        const filtroTexto = document.getElementById("filtro-texto");
+        const filtroDocente = document.getElementById("filtro-docente");
+        const filtroSeccion = document.getElementById("filtro-seccion");
+        const filtroEstado = document.getElementById("filtro-estado");
+        const botonLimpiarFiltros = document.getElementById("boton-limpiar-filtros");
+        const criterioOrden = document.getElementById("criterio_orden");
+
+        const kpiTotalRegistros = document.getElementById("kpi-total-registros");
+        const kpiTotalAtrasos = document.getElementById("kpi-total-atrasos");
+        const kpiTotalATiempo = document.getElementById("kpi-total-a-tiempo");
+        const kpiTotalSinRetiro = document.getElementById("kpi-total-sin-retiro");
+        const kpiPromedioAtraso = document.getElementById("kpi-promedio-atraso");
+
+        const contenedorInsights = document.getElementById("contenedor-insights");
+        const tablaTopDocentes = document.getElementById("tabla-top-docentes");
+        const tablaDetalleAnalisis = document.getElementById("tabla-detalle-analisis");
+        const textoCriterioOrden = document.getElementById("texto-criterio-orden");
+
+        function llenarSelect(select, valores) {
+            const valorActual = select.value;
+            select.innerHTML = '<option value="">Todos</option>';
+
+            valores.forEach(valor => {
+                const option = document.createElement("option");
+                option.value = valor;
+                option.textContent = valor;
+                select.appendChild(option);
+            });
+
+            if ([...select.options].some(opt => opt.value === valorActual)) {
+                select.value = valorActual;
+            }
+        }
+
+        function cargarOpcionesFiltros() {
+            const docentes = [...new Set(
+                datosAnalisis
+                    .map(item => item.docente)
+                    .filter(Boolean)
+            )].sort((a, b) => a.localeCompare(b, "es"));
+
+            const secciones = [...new Set(
+                datosAnalisis
+                    .map(item => item.seccion)
+                    .filter(Boolean)
+            )].sort((a, b) => a.localeCompare(b, "es"));
+
+            const estados = [...new Set(
+                datosAnalisis
+                    .map(item => item.estado)
+                    .filter(Boolean)
+            )].sort((a, b) => a.localeCompare(b, "es"));
+
+            llenarSelect(filtroDocente, docentes);
+            llenarSelect(filtroSeccion, secciones);
+            llenarSelect(filtroEstado, estados);
+        }
+
+        function obtenerTextoEstado(codigo) {
+            const mapa = {
+                "A_TIEMPO": "A tiempo",
+                "TOLERANCIA": "Tolerancia",
+                "LEVE": "Atraso leve",
+                "MEDIO": "Atraso medio",
+                "GRAVE": "Atraso grave",
+                "SIN_RETIRO": "Sin retiro",
+                "SIN_BLOQUE": "Bloque no configurado",
+                "INCONSISTENTE": "Dato inconsistente"
+            };
+            return mapa[codigo] || codigo;
+        }
+
+        function calcularSemaforoDocente(cantidad, minutos) {
+            if (minutos >= 150 || cantidad >= 20) {
+                return { clase: "alto", texto: "Alto impacto" };
+            }
+            if (minutos >= 60 || cantidad >= 10) {
+                return { clase: "medio", texto: "Impacto medio" };
+            }
+            return { clase: "bajo", texto: "Impacto bajo" };
+        }
+
+        function filtrarDatos() {
+            const texto = filtroTexto.value.trim().toLowerCase();
+            const docente = filtroDocente.value;
+            const seccion = filtroSeccion.value;
+            const estado = filtroEstado.value;
+
+            return datosAnalisis.filter(item => {
+                const coincideTexto =
+                    !texto ||
+                    (item.docente || "").toLowerCase().includes(texto) ||
+                    (item.asignatura || "").toLowerCase().includes(texto);
+
+                const coincideDocente = !docente || item.docente === docente;
+                const coincideSeccion = !seccion || item.seccion === seccion;
+                const coincideEstado = !estado || item.estado === estado;
+
+                return coincideTexto && coincideDocente && coincideSeccion && coincideEstado;
+            });
+        }
+
+        function actualizarKpis(datosFiltrados) {
+            const totalRegistros = datosFiltrados.length;
+            const totalAtrasos = datosFiltrados.filter(item => item.minutos_atraso !== null && item.minutos_atraso > 0).length;
+            const totalATiempo = datosFiltrados.filter(item => item.estado === "A_TIEMPO").length;
+            const totalSinRetiro = datosFiltrados.filter(item => item.estado === "SIN_RETIRO").length;
+
+            const atrasosPositivos = datosFiltrados
+                .filter(item => item.minutos_atraso !== null && item.minutos_atraso > 0)
+                .map(item => item.minutos_atraso);
+
+            const promedio = atrasosPositivos.length
+                ? (atrasosPositivos.reduce((a, b) => a + b, 0) / atrasosPositivos.length).toFixed(1)
+                : "0";
+
+            kpiTotalRegistros.textContent = totalRegistros;
+            kpiTotalAtrasos.textContent = totalAtrasos;
+            kpiTotalATiempo.textContent = totalATiempo;
+            kpiTotalSinRetiro.textContent = totalSinRetiro;
+            kpiPromedioAtraso.textContent = promedio;
+        }
+
+        function construirInsights(datosFiltrados) {
+            const totalRegistros = datosFiltrados.length;
+            const totalAtrasos = datosFiltrados.filter(item => item.minutos_atraso !== null && item.minutos_atraso > 0).length;
+            const totalATiempo = datosFiltrados.filter(item => item.estado === "A_TIEMPO").length;
+            const totalSinRetiro = datosFiltrados.filter(item => item.estado === "SIN_RETIRO").length;
+
+            const atrasosPositivos = datosFiltrados
+                .filter(item => item.minutos_atraso !== null && item.minutos_atraso > 0)
+                .map(item => item.minutos_atraso);
+
+            const promedio = atrasosPositivos.length
+                ? (atrasosPositivos.reduce((a, b) => a + b, 0) / atrasosPositivos.length).toFixed(1)
+                : "0";
+
+            const porcentajeAtraso = totalRegistros ? ((totalAtrasos / totalRegistros) * 100).toFixed(1) : "0.0";
+            const porcentajeATiempo = totalRegistros ? ((totalATiempo / totalRegistros) * 100).toFixed(1) : "0.0";
+            const porcentajeSinRetiro = totalRegistros ? ((totalSinRetiro / totalRegistros) * 100).toFixed(1) : "0.0";
+
+            const ranking = construirRanking(datosFiltrados);
+            const primero = ranking[0];
+
+            const insights = [
+                {
+                    titulo: "Panorama general",
+                    texto: `Con los filtros actuales se observan ${totalRegistros} registros. El ${porcentajeAtraso}% presenta atraso, el ${porcentajeATiempo}% está a tiempo y el ${porcentajeSinRetiro}% aparece sin retiro.`
+                },
+                {
+                    titulo: "Promedio de atraso",
+                    texto: `El promedio de atraso en el subconjunto analizado es de ${promedio} minutos. Este indicador ayuda a distinguir si el problema es leve, moderado o crítico.`
+                }
+            ];
+
+            if (primero) {
+                insights.push({
+                    titulo: "Docente con mayor impacto",
+                    texto: `${primero.docente} lidera el análisis filtrado con ${primero.cantidad} atrasos y ${primero.minutos} minutos acumulados, clasificado como ${primero.semaforo_texto.toLowerCase()}.`
+                });
+            }
+
+            if (totalSinRetiro > 0) {
+                insights.push({
+                    titulo: "Registros incompletos",
+                    texto: `Se detectaron ${totalSinRetiro} registros sin retiro en el subconjunto analizado. Conviene revisarlos para mejorar trazabilidad y consistencia.`
+                });
+            }
+
+            contenedorInsights.innerHTML = "";
+            insights.forEach(insight => {
+                const div = document.createElement("div");
+                div.className = "insight";
+                div.innerHTML = `<h4>${insight.titulo}</h4><p>${insight.texto}</p>`;
+                contenedorInsights.appendChild(div);
+            });
+        }
+
+        function construirRanking(datosFiltrados) {
+            const resumen = {};
+
+            datosFiltrados.forEach(item => {
+                if (item.minutos_atraso !== null && item.minutos_atraso > 0) {
+                    const nombre = item.docente || "Docente sin nombre";
+
+                    if (!resumen[nombre]) {
+                        resumen[nombre] = { cantidad: 0, minutos: 0 };
+                    }
+
+                    resumen[nombre].cantidad += 1;
+                    resumen[nombre].minutos += item.minutos_atraso;
+                }
+            });
+
+            const ranking = Object.entries(resumen).map(([docente, datos]) => {
+                const semaforo = calcularSemaforoDocente(datos.cantidad, datos.minutos);
+                return {
+                    docente,
+                    cantidad: datos.cantidad,
+                    minutos: datos.minutos,
+                    semaforo: semaforo.clase,
+                    semaforo_texto: semaforo.texto
+                };
+            });
+
+            const orden = criterioOrden.value;
+            textoCriterioOrden.textContent = orden === "minutos" ? "minutos acumulados" : "cantidad de atrasos";
+
+            ranking.sort((a, b) => {
+                if (orden === "minutos") {
+                    return (b.minutos - a.minutos) || (b.cantidad - a.cantidad);
+                }
+                return (b.cantidad - a.cantidad) || (b.minutos - a.minutos);
+            });
+
+            return ranking.slice(0, 5);
+        }
+
+        function actualizarRanking(datosFiltrados) {
+            const ranking = construirRanking(datosFiltrados);
+
+            tablaTopDocentes.innerHTML = "";
+
+            if (!ranking.length) {
+                tablaTopDocentes.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="sin-datos">No hay atrasos para mostrar.</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            ranking.forEach(item => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${item.docente}</td>
+                    <td>${item.cantidad}</td>
+                    <td>${item.minutos}</td>
+                    <td><span class="semaforo semaforo-${item.semaforo}">${item.semaforo_texto}</span></td>
+                `;
+                tablaTopDocentes.appendChild(tr);
+            });
+        }
+
+        function actualizarDetalle(datosFiltrados) {
+            const detalleVisible = datosFiltrados
+                .filter(item => item.estado !== "A_TIEMPO")
+                .slice(0, 300);
+
+            tablaDetalleAnalisis.innerHTML = "";
+
+            if (!detalleVisible.length) {
+                tablaDetalleAnalisis.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="sin-datos">No hay registros para mostrar con los filtros actuales.</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            detalleVisible.forEach(item => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${item.fecha_clase_texto || "-"}</td>
+                    <td>${item.docente || "-"}</td>
+                    <td>${item.asignatura || "-"}</td>
+                    <td>${item.seccion || "-"}</td>
+                    <td>${item.bloque_numero ?? "-"}</td>
+                    <td>${item.hora_inicio_bloque || "-"}</td>
+                    <td>${item.minutos_atraso ?? "-"}</td>
+                    <td><span class="estado estado-${item.color_estado}">${item.estado_texto || obtenerTextoEstado(item.estado)}</span></td>
+                    <td>${item.observacion || "-"}</td>
+                `;
+                tablaDetalleAnalisis.appendChild(tr);
+            });
+        }
+
+        function aplicarFiltros() {
+            const datosFiltrados = filtrarDatos();
+            actualizarKpis(datosFiltrados);
+            actualizarRanking(datosFiltrados);
+            construirInsights(datosFiltrados);
+            actualizarDetalle(datosFiltrados);
+        }
+
+        function limpiarFiltros() {
+            filtroTexto.value = "";
+            filtroDocente.value = "";
+            filtroSeccion.value = "";
+            filtroEstado.value = "";
+            aplicarFiltros();
+        }
+
+        filtroTexto.addEventListener("input", aplicarFiltros);
+        filtroDocente.addEventListener("change", aplicarFiltros);
+        filtroSeccion.addEventListener("change", aplicarFiltros);
+        filtroEstado.addEventListener("change", aplicarFiltros);
+        criterioOrden.addEventListener("change", aplicarFiltros);
+        botonLimpiarFiltros.addEventListener("click", limpiarFiltros);
+
+        cargarOpcionesFiltros();
+        aplicarFiltros();
+    </script>
+    {% endif %}
+
+</body>
+</html>

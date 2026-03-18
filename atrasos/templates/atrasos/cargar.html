@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cargar archivo Excel</title>
+</head>
+<body>
+
+    <h1>Cargar archivo de libro de clases</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="archivo" required>
+        <button type="submit">Cargar</button>
+    </form>
+
+    {% if mensaje %}
+        <p style="color:green;">{{ mensaje }}</p>
+    {% endif %}
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    {% if columnas %}
+        <h3>Columnas detectadas:</h3>
+        <ul>
+            {% for col in columnas %}
+                <li>{{ col }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if filas %}
+        <h3>Primeras filas:</h3>
+        {{ filas|safe }}
+    {% endif %}
+
+</body>
+</html>
