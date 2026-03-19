@@ -8,6 +8,12 @@ from .models import Bloque
 
 
 # =========================================================
+# CONFIGURACIÓN GENERAL
+# =========================================================
+TOLERANCIA_MINUTOS = 10
+
+
+# =========================================================
 # BLOQUES OFICIALES BASE
 # Estos horarios se usan como respaldo si no existe
 # el bloque en la base de datos.
@@ -155,6 +161,27 @@ def buscar_columna(diccionario_fila, nombres_posibles):
         if nombre in diccionario_fila:
             return diccionario_fila.get(nombre)
     return None
+
+
+def aplicar_tolerancia_minutos(minutos_calculados):
+    """
+    Resta la tolerancia fija definida y nunca devuelve valores negativos.
+
+    Ejemplos:
+    - 15 -> 5
+    - 10 -> 0
+    - 9 -> 0
+    - -3 -> 0
+    """
+    if minutos_calculados is None:
+        return None
+
+    minutos_ajustados = minutos_calculados - TOLERANCIA_MINUTOS
+
+    if minutos_ajustados < 0:
+        return 0
+
+    return minutos_ajustados
 
 
 def clasificar_atraso(minutos_atraso):
@@ -384,6 +411,8 @@ def calcular_atraso_fila(fila_dict):
         "jornada": jornada,
         "sala": sala,
         "minutos_atraso": None,
+        "minutos_atraso_original": None,
+        "minutos_tolerancia_aplicada": TOLERANCIA_MINUTOS,
         "estado": "SIN_BLOQUE",
         "estado_texto": "Bloque no configurado",
         "color_estado": "gris",
@@ -413,30 +442,44 @@ def calcular_atraso_fila(fila_dict):
         timezone.get_current_timezone()
     )
 
-    diferencia_minutos = int(
+    diferencia_minutos_original = int(
         round((fecha_retiro - fecha_hora_programada).total_seconds() / 60)
     )
 
-    resultado["minutos_atraso"] = diferencia_minutos
+    resultado["minutos_atraso_original"] = diferencia_minutos_original
 
-    if diferencia_minutos < -180 or diferencia_minutos > 600:
+    if diferencia_minutos_original < -180 or diferencia_minutos_original > 600:
         resultado["estado"] = "INCONSISTENTE"
         resultado["estado_texto"] = "Dato inconsistente"
         resultado["color_estado"] = "gris"
         resultado["observacion"] = "La diferencia calculada parece inconsistente y requiere revisión."
         return resultado
 
-    estado, estado_texto = clasificar_atraso(diferencia_minutos)
+    diferencia_minutos_ajustada = aplicar_tolerancia_minutos(diferencia_minutos_original)
+    resultado["minutos_atraso"] = diferencia_minutos_ajustada
+
+    estado, estado_texto = clasificar_atraso(diferencia_minutos_ajustada)
     resultado["estado"] = estado
     resultado["estado_texto"] = estado_texto
     resultado["color_estado"] = obtener_color_estado(estado)
 
-    if fuente_bloque == "excel":
-        resultado["observacion"] = f"{estado_texto} (calculado desde horario leído en el Excel)."
-    elif fuente_bloque == "memoria":
-        resultado["observacion"] = f"{estado_texto} (bloque resuelto desde tabla base en memoria)."
+    if diferencia_minutos_original > 0:
+        detalle_tolerancia = (
+            f"Se aplicó tolerancia de {TOLERANCIA_MINUTOS} min: "
+            f"atraso original {diferencia_minutos_original} min, "
+            f"atraso final {diferencia_minutos_ajustada} min."
+        )
     else:
-        resultado["observacion"] = estado_texto
+        detalle_tolerancia = (
+            f"Sin atraso real. Se aplicó tolerancia de {TOLERANCIA_MINUTOS} min y el resultado quedó en 0 min."
+        )
+
+    if fuente_bloque == "excel":
+        resultado["observacion"] = f"{estado_texto}. {detalle_tolerancia} (calculado desde horario leído en el Excel)."
+    elif fuente_bloque == "memoria":
+        resultado["observacion"] = f"{estado_texto}. {detalle_tolerancia} (bloque resuelto desde tabla base en memoria)."
+    else:
+        resultado["observacion"] = f"{estado_texto}. {detalle_tolerancia}"
 
     return resultado
 
@@ -509,20 +552,34 @@ def analizar_excel_en_memoria(archivo, criterio_orden="cantidad"):
             "semaforo_texto": semaforo_texto,
         })
 
-    if criterio_orden == "minutos":
-        docentes_ordenados = sorted(
-            docentes_ordenados,
-            key=lambda x: (x["minutos"], x["cantidad"]),
-            reverse=True
-        )
-    else:
-        docentes_ordenados = sorted(
-            docentes_ordenados,
-            key=lambda x: (x["cantidad"], x["minutos"]),
-            reverse=True
-        )
+    docentes_prioritarios = [
+        item for item in docentes_ordenados
+        if item["semaforo"] in ["alto", "medio"]
+    ]
 
-    top_docentes = docentes_ordenados[:5]
+    docentes_alto_impacto = [
+        item for item in docentes_prioritarios
+        if item["semaforo"] == "alto"
+    ]
+
+    docentes_impacto_medio = [
+        item for item in docentes_prioritarios
+        if item["semaforo"] == "medio"
+    ]
+
+    docentes_alto_impacto = sorted(
+        docentes_alto_impacto,
+        key=lambda x: (x["minutos"], x["cantidad"]),
+        reverse=True
+    )
+
+    docentes_impacto_medio = sorted(
+        docentes_impacto_medio,
+        key=lambda x: (x["minutos"], x["cantidad"]),
+        reverse=True
+    )
+
+    top_docentes = (docentes_alto_impacto + docentes_impacto_medio)[:5]
 
     insights = construir_insights(
         total_registros=total_registros,
