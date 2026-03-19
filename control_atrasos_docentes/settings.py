@@ -22,13 +22,23 @@ SECRET_KEY = os.getenv(
 )
 
 # DEBUG controlado por variable de entorno.
-# En Azure debes configurar DEBUG=False
 DEBUG = os.getenv("DEBUG", "True").strip().lower() == "true"
 
-# Hosts permitidos
-# Puedes agregar más dominios separados por coma en Azure.
+# Hosts permitidos por variable de entorno
 ALLOWED_HOSTS_ENV = os.getenv("ALLOWED_HOSTS", "")
-ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS_ENV.split(",") if host.strip()]
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in ALLOWED_HOSTS_ENV.split(",")
+    if host.strip()
+]
+
+# Orígenes confiables para CSRF por variable de entorno
+CSRF_TRUSTED_ORIGINS_ENV = os.getenv("CSRF_TRUSTED_ORIGINS", "")
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in CSRF_TRUSTED_ORIGINS_ENV.split(",")
+    if origin.strip()
+]
 
 # Valores mínimos para local + Azure
 HOSTS_BASE = [
@@ -40,6 +50,16 @@ HOSTS_BASE = [
 for host in HOSTS_BASE:
     if host not in ALLOWED_HOSTS:
         ALLOWED_HOSTS.append(host)
+
+# Opcional: permitir host interno detectado por Azure
+WEBSITE_HOSTNAME = os.getenv("WEBSITE_HOSTNAME", "").strip()
+if WEBSITE_HOSTNAME and WEBSITE_HOSTNAME not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(WEBSITE_HOSTNAME)
+
+# Si viene URL principal desde entorno, agregarla automáticamente a CSRF
+APP_URL = os.getenv("APP_URL", "").strip()
+if APP_URL and APP_URL not in CSRF_TRUSTED_ORIGINS:
+    CSRF_TRUSTED_ORIGINS.append(APP_URL)
 
 
 # =========================================================
@@ -63,7 +83,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # importante para Azure
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -100,8 +120,6 @@ WSGI_APPLICATION = 'control_atrasos_docentes.wsgi.application'
 # =========================================================
 # BASE DE DATOS
 # =========================================================
-# Para comenzar puedes seguir con SQLite.
-# Más adelante, si lo publicas de forma más seria, conviene PostgreSQL.
 
 DATABASES = {
     'default': {
@@ -147,12 +165,18 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# WhiteNoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# =========================================================
+# SUBIDA DE ARCHIVOS
+# =========================================================
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 25 * 1024 * 1024
+FILE_UPLOAD_MAX_MEMORY_SIZE = 25 * 1024 * 1024
 
 
 # =========================================================
@@ -162,6 +186,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     X_FRAME_OPTIONS = 'DENY'
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
