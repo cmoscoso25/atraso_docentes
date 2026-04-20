@@ -1,0 +1,353 @@
+/* =========================================================
+   LOGIN INSTITUCIONAL INACAP
+   Proyecto: Control de Atrasos Docentes
+========================================================= */
+
+*{
+  box-sizing:border-box;
+}
+
+html, body{
+  margin:0;
+  padding:0;
+  font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body.login-body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left, rgba(207,16,16,.16), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(163,15,15,.12), transparent 30%),
+    linear-gradient(135deg, #0b1120 0%, #111827 45%, #1f2937 100%);
+  color:#ffffff;
+}
+
+.login-shell{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+}
+
+/* ================= HERO ================= */
+
+.login-hero{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:48px;
+  overflow:hidden;
+}
+
+.login-hero__overlay{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.38)),
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.08), transparent 22%);
+}
+
+.login-hero__content{
+  position:relative;
+  z-index:1;
+  max-width:560px;
+  width:100%;
+}
+
+.login-brand{
+  margin-bottom:34px;
+}
+
+.login-brand__mark{
+  font-size:58px;
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-1px;
+}
+
+.login-brand__campus{
+  margin-top:8px;
+  font-size:18px;
+  font-weight:700;
+  opacity:.92;
+}
+
+.login-hero__eyebrow{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.08);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.2px;
+  margin-bottom:18px;
+}
+
+.login-hero__title{
+  margin:0 0 14px;
+  font-size:44px;
+  font-weight:900;
+  line-height:1.12;
+  letter-spacing:-.8px;
+}
+
+.login-hero__text{
+  margin:0;
+  color:rgba(255,255,255,.86);
+  font-size:17px;
+  line-height:1.6;
+  max-width:520px;
+}
+
+/* ================= PANEL ================= */
+
+.login-panel{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 28px;
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(8px);
+}
+
+.login-card{
+  width:min(100%, 460px);
+  background:#ffffff;
+  color:#0f172a;
+  border-radius:28px;
+  box-shadow:0 20px 50px rgba(0,0,0,.22);
+  padding:34px 30px;
+  animation:fadeUp .4s ease;
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.login-card__head{
+  margin-bottom:18px;
+}
+
+.login-card__eyebrow{
+  color:#cf1010;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:10px;
+  letter-spacing:.2px;
+}
+
+.login-card__title{
+  margin:0 0 8px;
+  font-size:30px;
+  font-weight:900;
+  line-height:1.1;
+  letter-spacing:-.4px;
+}
+
+.login-card__subtitle{
+  margin:0;
+  color:#64748b;
+  font-size:15px;
+  line-height:1.45;
+}
+
+/* ================= MENSAJES ================= */
+
+.login-messages{
+  margin-bottom:18px;
+}
+
+.login-alert{
+  padding:12px 14px;
+  border-radius:14px;
+  background:#fde8e8;
+  color:#b91c1c;
+  font-weight:700;
+  font-size:14px;
+  line-height:1.4;
+  border:1px solid #f8caca;
+}
+
+/* ================= FORM ================= */
+
+.login-form{
+  display:grid;
+  gap:16px;
+}
+
+.login-field{
+  display:grid;
+  gap:8px;
+}
+
+.login-field label{
+  font-size:14px;
+  font-weight:800;
+  color:#0f172a;
+}
+
+.login-field input{
+  width:100%;
+  min-height:52px;
+  border-radius:16px;
+  border:1px solid #d7deea;
+  padding:12px 14px;
+  font-size:15px;
+  color:#0f172a;
+  background:#ffffff;
+  transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.login-field input::placeholder{
+  color:#94a3b8;
+}
+
+.login-field input:focus{
+  border-color:#cf1010;
+  outline:none;
+  box-shadow:0 0 0 4px rgba(207,16,16,.10);
+}
+
+.login-submit{
+  min-height:54px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(180deg, #cf1010, #a30f0f);
+  color:#ffffff;
+  font-size:15px;
+  font-weight:900;
+  cursor:pointer;
+  transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+  box-shadow:0 10px 22px rgba(207,16,16,.22);
+}
+
+.login-submit:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.02);
+}
+
+.login-submit:active{
+  transform:translateY(0);
+}
+
+.login-submit:focus{
+  outline:none;
+  box-shadow:
+    0 10px 22px rgba(207,16,16,.22),
+    0 0 0 4px rgba(207,16,16,.14);
+}
+
+/* ================= FOOTER ================= */
+
+.login-footer-note{
+  margin-top:18px;
+  text-align:center;
+  color:#64748b;
+  font-size:13px;
+  line-height:1.4;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1080px){
+  .login-shell{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .login-hero,
+  .login-panel{
+    padding:32px 24px;
+  }
+
+  .login-hero__title{
+    font-size:38px;
+  }
+
+  .login-brand__mark{
+    font-size:50px;
+  }
+}
+
+@media (max-width: 860px){
+  .login-shell{
+    grid-template-columns:1fr;
+  }
+
+  .login-hero{
+    min-height:280px;
+    align-items:flex-end;
+  }
+
+  .login-hero__content{
+    max-width:100%;
+  }
+
+  .login-hero__title{
+    font-size:32px;
+  }
+
+  .login-hero__text{
+    font-size:15px;
+  }
+
+  .login-panel{
+    padding-top:0;
+    margin-top:-20px;
+  }
+
+  .login-card{
+    width:min(100%, 520px);
+    border-radius:24px;
+  }
+}
+
+@media (max-width: 520px){
+  .login-hero{
+    padding:28px 20px 42px;
+    min-height:240px;
+  }
+
+  .login-panel{
+    padding:0 16px 22px;
+  }
+
+  .login-card{
+    padding:26px 18px;
+    border-radius:22px;
+  }
+
+  .login-brand{
+    margin-bottom:24px;
+  }
+
+  .login-brand__mark{
+    font-size:42px;
+  }
+
+  .login-brand__campus{
+    font-size:16px;
+  }
+
+  .login-hero__title{
+    font-size:28px;
+  }
+
+  .login-card__title{
+    font-size:26px;
+  }
+
+  .login-field input,
+  .login-submit{
+    min-height:50px;
+  }
+}

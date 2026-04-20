@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Acceso restringido | Control de atrasos docentes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        :root{
+            --fondo:#f3f5f8;
+            --card:#ffffff;
+            --linea:#d9e1ea;
+            --texto:#1f2937;
+            --texto-suave:#6b7280;
+            --marca:#c8102e;
+            --marca-oscura:#9f1027;
+            --alerta-fondo:#fff1f2;
+            --alerta-borde:#fecdd3;
+            --alerta-texto:#be123c;
+            --sombra:0 16px 36px rgba(15, 23, 42, 0.10);
+            --radio-xl:22px;
+            --radio-lg:16px;
+            --radio-md:12px;
+        }
+
+        *{
+            box-sizing:border-box;
+        }
+
+        body{
+            margin:0;
+            min-height:100vh;
+            font-family:Arial, Helvetica, sans-serif;
+            background:linear-gradient(180deg, #f8fafc 0%, #f3f5f8 100%);
+            color:var(--texto);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:24px;
+        }
+
+        .contenedor{
+            width:100%;
+            max-width:560px;
+        }
+
+        .tarjeta{
+            background:var(--card);
+            border:1px solid var(--linea);
+            border-radius:var(--radio-xl);
+            box-shadow:var(--sombra);
+            overflow:hidden;
+        }
+
+        .cabecera{
+            background:linear-gradient(135deg, rgba(200,16,46,0.98) 0%, rgba(159,16,39,0.98) 100%);
+            color:#ffffff;
+            padding:22px 24px;
+        }
+
+        .cabecera__etiqueta{
+            display:inline-block;
+            padding:6px 10px;
+            border-radius:999px;
+            background:rgba(255,255,255,0.16);
+            border:1px solid rgba(255,255,255,0.24);
+            font-size:11px;
+            font-weight:bold;
+            letter-spacing:0.3px;
+            margin-bottom:10px;
+        }
+
+        .cabecera h1{
+            margin:0;
+            font-size:26px;
+        }
+
+        .cuerpo{
+            padding:24px;
+        }
+
+        .mensaje{
+            background:var(--alerta-fondo);
+            border:1px solid var(--alerta-borde);
+            color:var(--alerta-texto);
+            border-radius:14px;
+            padding:14px;
+            font-size:14px;
+            line-height:1.55;
+            margin-bottom:18px;
+        }
+
+        .texto-apoyo{
+            margin:0 0 18px 0;
+            color:var(--texto-suave);
+            font-size:13px;
+            line-height:1.5;
+        }
+
+        .acciones{
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+        }
+
+        .boton{
+            min-height:44px;
+            padding:0 16px;
+            border:none;
+            border-radius:var(--radio-md);
+            font-size:14px;
+            font-weight:bold;
+            cursor:pointer;
+            text-decoration:none;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .boton-principal{
+            background:var(--marca);
+            color:#ffffff;
+        }
+
+        .boton-principal:hover{
+            background:var(--marca-oscura);
+        }
+
+        .boton-secundario{
+            background:#ffffff;
+            color:var(--texto);
+            border:1px solid var(--linea);
+        }
+
+        .boton-secundario:hover{
+            background:#f8fafc;
+        }
+
+        .formulario-inline{
+            margin:0;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="tarjeta">
+            <div class="cabecera">
+                <div class="cabecera__etiqueta">INACAP Sede Arica</div>
+                <h1>{{ titulo }}</h1>
+            </div>
+
+            <div class="cuerpo">
+                <div class="mensaje">
+                    {{ mensaje }}
+                </div>
+
+                <p class="texto-apoyo">
+                    Si estimas que deberías tener acceso, solicita la habilitación del rol correspondiente en este sistema.
+                </p>
+
+                <div class="acciones">
+                    <form method="post" action="/logout/" class="formulario-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="boton boton-secundario">
+                            Cerrar sesión
+                        </button>
+                    </form>
+
+                    <a href="/login/" class="boton boton-principal">Ingresar con otro usuario</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

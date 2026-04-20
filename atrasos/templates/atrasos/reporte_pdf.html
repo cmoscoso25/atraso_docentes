@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte Ejecutivo - Control de Atrasos Docentes</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1.4cm 1.2cm 1.4cm 1.2cm;
+        }
+
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 10px;
+            color: #1f2937;
+            margin: 0;
+            padding: 0;
+        }
+
+        .contenedor {
+            width: 100%;
+        }
+
+        .encabezado {
+            border-bottom: 2px solid #c8102e;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+        }
+
+        .marca {
+            font-size: 16px;
+            font-weight: bold;
+            color: #c8102e;
+            margin-bottom: 2px;
+        }
+
+        .submarca {
+            font-size: 11px;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .meta {
+            font-size: 9px;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .bloque {
+            margin-bottom: 12px;
+        }
+
+        .estado-global {
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid #dbe4ee;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .estado-controlado {
+            background: #ecfdf5;
+            color: #166534;
+            border-color: #bbf7d0;
+        }
+
+        .estado-atencion {
+            background: #fffbeb;
+            color: #92400e;
+            border-color: #fde68a;
+        }
+
+        .estado-critico {
+            background: #fef2f2;
+            color: #991b1b;
+            border-color: #fecaca;
+        }
+
+        .titulo-bloque {
+            font-size: 11px;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .tabla-kpis {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tabla-kpis td {
+            width: 25%;
+            border: 1px solid #dbe4ee;
+            background: #f8fafc;
+            padding: 10px 8px;
+            vertical-align: top;
+        }
+
+        .kpi-etiqueta {
+            font-size: 8px;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .kpi-valor {
+            font-size: 18px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .tabla {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 4px;
+        }
+
+        .tabla th {
+            background: #c8102e;
+            color: #ffffff;
+            font-size: 9px;
+            padding: 6px;
+            text-align: left;
+        }
+
+        .tabla td {
+            border: 1px solid #e5e7eb;
+            font-size: 9px;
+            padding: 6px;
+            vertical-align: top;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 7px;
+            border-radius: 10px;
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .badge-alto {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-medio {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-bajo {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        ul {
+            margin: 4px 0 0 16px;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .pie {
+            margin-top: 16px;
+            padding-top: 8px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 8px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+
+        <div class="encabezado">
+            <div class="marca">INACAP · Gestión Académica</div>
+            <div class="submarca">Reporte Ejecutivo · Control de Atrasos Docentes</div>
+            <div class="meta">
+                Fecha de generación: {{ fecha }}<br>
+                Archivo analizado: {{ archivo }}
+            </div>
+        </div>
+
+        <div class="bloque">
+            <div class="estado-global {{ clase_estado }}">
+                Estado global del análisis: {{ estado_global }}
+            </div>
+        </div>
+
+        <div class="bloque">
+            <div class="titulo-bloque">KPIs ejecutivos</div>
+            <table class="tabla-kpis">
+                <tr>
+                    <td>
+                        <div class="kpi-etiqueta">Registros analizados</div>
+                        <div class="kpi-valor">{{ total_registros }}</div>
+                    </td>
+                    <td>
+                        <div class="kpi-etiqueta">Atrasos detectados</div>
+                        <div class="kpi-valor">{{ total_atrasos }}</div>
+                    </td>
+                    <td>
+                        <div class="kpi-etiqueta">% con atraso</div>
+                        <div class="kpi-valor">{{ porcentaje_atrasos }}%</div>
+                    </td>
+                    <td>
+                        <div class="kpi-etiqueta">Promedio atraso</div>
+                        <div class="kpi-valor">{{ promedio_atraso }}</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="bloque">
+            <div class="titulo-bloque">Docentes prioritarios</div>
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th style="width: 34%;">Docente</th>
+                        <th style="width: 28%;">Programa</th>
+                        <th style="width: 12%;">Atrasos</th>
+                        <th style="width: 12%;">Minutos</th>
+                        <th style="width: 14%;">Impacto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in top_docentes %}
+                    <tr>
+                        <td>{{ item.docente }}</td>
+                        <td>{{ item.programa }}</td>
+                        <td>{{ item.cantidad }}</td>
+                        <td>{{ item.minutos }}</td>
+                        <td>
+                            {% if item.semaforo == "alto" %}
+                                <span class="badge badge-alto">{{ item.semaforo_texto }}</span>
+                            {% elif item.semaforo == "medio" %}
+                                <span class="badge badge-medio">{{ item.semaforo_texto }}</span>
+                            {% else %}
+                                <span class="badge badge-bajo">{{ item.semaforo_texto }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No se detectaron docentes prioritarios para este análisis.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="bloque">
+            <div class="titulo-bloque">Insights automáticos</div>
+            <ul>
+                {% for insight in insights %}
+                <li>{{ insight }}</li>
+                {% empty %}
+                <li>No se generaron observaciones automáticas para este análisis.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="bloque">
+            <div class="titulo-bloque">Acciones sugeridas</div>
+            <ul>
+                {% for accion in acciones_sugeridas %}
+                <li>{{ accion }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="pie">
+            Análisis generado automáticamente · Uso interno Dirección Académica · INACAP Sede Arica
+        </div>
+    </div>
+</body>
+</html>

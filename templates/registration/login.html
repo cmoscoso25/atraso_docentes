@@ -1,0 +1,89 @@
+{% extends "atrasos/base_login.html" %}
+
+{% block title %}Iniciar sesión · Control de Atrasos Docentes{% endblock %}
+
+{% block contenido_login %}
+
+<div class="login-card">
+
+    <div class="login-card__head">
+        <div class="login-card__eyebrow">Acceso institucional</div>
+
+        <h2 class="login-card__title">Iniciar sesión</h2>
+
+        <p class="login-card__subtitle">
+            Accede al panel de control de atrasos docentes y seguimiento ejecutivo.
+        </p>
+    </div>
+
+    {% if form.errors %}
+        <div class="login-messages">
+            <div class="login-alert">
+                Usuario o contraseña incorrectos. Intenta nuevamente.
+            </div>
+        </div>
+    {% endif %}
+
+    {% if next and user.is_authenticated %}
+        <div class="login-messages">
+            <div class="login-alert">
+                Tu usuario no tiene permisos para acceder a esta sección.
+            </div>
+        </div>
+    {% endif %}
+
+    <form method="post" class="login-form" novalidate>
+        {% csrf_token %}
+
+        <div class="login-field">
+            <label for="id_username">Usuario</label>
+            <input
+                type="text"
+                id="id_username"
+                name="username"
+                placeholder="Ingresa tu usuario"
+                required
+                autofocus
+                value="{{ form.username.value|default_if_none:'' }}"
+                autocomplete="username"
+            >
+        </div>
+
+        <div class="login-field">
+            <label for="id_password">Contraseña</label>
+            <input
+                type="password"
+                id="id_password"
+                name="password"
+                placeholder="Ingresa tu contraseña"
+                required
+                autocomplete="current-password"
+            >
+        </div>
+
+        <input type="hidden" name="next" value="{{ next|default:'' }}">
+
+        <button type="submit" class="login-submit">
+            Ingresar al sistema
+        </button>
+    </form>
+
+    <div style="margin-top: 14px; text-align: center; display: flex; flex-direction: column; gap: 8px;">
+        <a href="{% url 'password_change' %}"
+           style="font-size: 13px; color: #6b7280; text-decoration: none;">
+            Cambiar contraseña
+        </a>
+
+        <a href="{% url 'password_reset' %}"
+           style="font-size: 13px; color: #6b7280; text-decoration: none;">
+            ¿Olvidaste tu contraseña?
+        </a>
+    </div>
+
+    <div class="login-footer-note">
+        Acceso interno · INACAP Sede Arica
+    </div>
+
+</div>
+
+{% endblock %}

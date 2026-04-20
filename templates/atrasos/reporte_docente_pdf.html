@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte Ejecutivo Individual</title>
+    <style>
+        @page {
+            size: a4;
+            margin: 1.4cm;
+        }
+
+        body{
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 11px;
+            color: #1f2937;
+        }
+
+        .encabezado{
+            border-bottom: 2px solid #c8102e;
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+        }
+
+        .marca{
+            font-size: 10px;
+            color: #c8102e;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .titulo{
+            font-size: 22px;
+            font-weight: bold;
+            margin: 0 0 4px 0;
+            color: #111827;
+        }
+
+        .subtitulo{
+            font-size: 10px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .docente{
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .fecha{
+            font-size: 10px;
+            color: #6b7280;
+        }
+
+        .seccion{
+            border: 1px solid #dfe4ea;
+            margin-bottom: 12px;
+            padding: 10px;
+        }
+
+        .seccion h2{
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: #111827;
+        }
+
+        .estado{
+            display: inline-block;
+            padding: 5px 9px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .estado-critico{
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .estado-atencion{
+            background: #ffedd5;
+            color: #9a3412;
+        }
+
+        .estado-controlado{
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .lectura{
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .tabla{
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 6px;
+        }
+
+        .tabla th,
+        .tabla td{
+            border: 1px solid #dfe4ea;
+            padding: 6px;
+            font-size: 10px;
+            vertical-align: top;
+        }
+
+        .tabla th{
+            background: #f3f4f6;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .centrado{
+            text-align: center;
+        }
+
+        .kpi-grid{
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 6px;
+            margin: 0 -6px;
+        }
+
+        .kpi{
+            border: 1px solid #dfe4ea;
+            background: #fafafa;
+            padding: 8px;
+        }
+
+        .kpi-label{
+            font-size: 9px;
+            text-transform: uppercase;
+            color: #6b7280;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .kpi-valor{
+            font-size: 18px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .kpi-pie{
+            font-size: 9px;
+            color: #6b7280;
+            margin-top: 3px;
+        }
+
+        .lista{
+            margin: 0;
+            padding-left: 16px;
+        }
+
+        .lista li{
+            margin-bottom: 5px;
+            line-height: 1.45;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="encabezado">
+        <div class="marca">Control de Atrasos Docentes · INACAP Sede Arica</div>
+        <div class="titulo">Reporte Ejecutivo Individual</div>
+        <div class="subtitulo">Análisis estadístico y lectura directiva del comportamiento horario del docente.</div>
+        <div class="docente">{{ docente }}</div>
+        <div class="fecha">Generado el {{ fecha_generacion }}</div>
+    </div>
+
+    <div class="seccion">
+        <h2>Diagnóstico ejecutivo</h2>
+
+        {% if nivel_ejecutivo == "Crítico" %}
+            <div class="estado estado-critico">Situación crítica</div>
+        {% elif nivel_ejecutivo == "Atención" %}
+            <div class="estado estado-atencion">Situación en atención</div>
+        {% else %}
+            <div class="estado estado-controlado">Situación controlada</div>
+        {% endif %}
+
+        <div class="lectura">{{ lectura_ejecutiva }}</div>
+    </div>
+
+    <div class="seccion">
+        <h2>Indicadores clave</h2>
+
+        <table class="kpi-grid">
+            <tr>
+                <td class="kpi" width="25%">
+                    <div class="kpi-label">Registros analizados</div>
+                    <div class="kpi-valor">{{ total_registros }}</div>
+                    <div class="kpi-pie">Total del docente en el análisis.</div>
+                </td>
+                <td class="kpi" width="25%">
+                    <div class="kpi-label">Atrasos efectivos</div>
+                    <div class="kpi-valor">{{ total_atrasos }}</div>
+                    <div class="kpi-pie">Eventos con atraso superior a cero.</div>
+                </td>
+                <td class="kpi" width="25%">
+                    <div class="kpi-label">Minutos acumulados</div>
+                    <div class="kpi-valor">{{ minutos_totales }}</div>
+                    <div class="kpi-pie">{{ horas_totales }} horas acumuladas.</div>
+                </td>
+                <td class="kpi" width="25%">
+                    <div class="kpi-label">Promedio</div>
+                    <div class="kpi-valor">{{ promedio }}</div>
+                    <div class="kpi-pie">Minutos promedio por evento.</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="kpi" width="25%">
+                    <div class="kpi-label">Mediana</div>
+                    <div class="kpi-valor">{{ mediana }}</div>
+                    <div class="kpi-pie">Valor central observado.</div>
+                </td>
+                <td class="kpi" width="25%">
+                    <div class="kpi-label">Máximo atraso</div>
+                    <div class="kpi-valor">{{ max_atraso }}</div>
+                    <div class="kpi-pie">Mayor atraso del período.</div>
+                </td>
+                <td class="kpi" width="25%">
+                    <div class="kpi-label">Mínimo atraso</div>
+                    <div class="kpi-valor">{{ min_atraso }}</div>
+                    <div class="kpi-pie">Menor atraso efectivo.</div>
+                </td>
+                <td class="kpi" width="25%">
+                    <div class="kpi-label">% crítico</div>
+                    <div class="kpi-valor">{{ porcentaje_critico }}%</div>
+                    <div class="kpi-pie">Proporción crítica del total.</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="seccion">
+        <h2>Distribución por severidad</h2>
+
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>Severidad</th>
+                    <th class="centrado">Casos</th>
+                    <th class="centrado">Porcentaje</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Impacto leve</td>
+                    <td class="centrado">{{ leves }}</td>
+                    <td class="centrado">{{ porcentaje_leve }}%</td>
+                </tr>
+                <tr>
+                    <td>Impacto moderado</td>
+                    <td class="centrado">{{ moderados }}</td>
+                    <td class="centrado">{{ porcentaje_moderado }}%</td>
+                </tr>
+                <tr>
+                    <td>Impacto crítico</td>
+                    <td class="centrado">{{ criticos }}</td>
+                    <td class="centrado">{{ porcentaje_critico }}%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="seccion">
+        <h2>Concentración del problema</h2>
+
+        <table class="tabla" style="margin-bottom:10px;">
+            <thead>
+                <tr>
+                    <th>Bloques con mayor impacto</th>
+                    <th class="centrado">Casos</th>
+                    <th class="centrado">Minutos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in top_bloques %}
+                <tr>
+                    <td>{{ item.nombre }}</td>
+                    <td class="centrado">{{ item.casos }}</td>
+                    <td class="centrado">{{ item.minutos }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="centrado">Sin datos</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="tabla" style="margin-bottom:10px;">
+            <thead>
+                <tr>
+                    <th>Asignaturas con mayor impacto</th>
+                    <th class="centrado">Casos</th>
+                    <th class="centrado">Minutos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in top_asignaturas %}
+                <tr>
+                    <td>{{ item.nombre }}</td>
+                    <td class="centrado">{{ item.casos }}</td>
+                    <td class="centrado">{{ item.minutos }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="centrado">Sin datos</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="tabla" style="margin-bottom:10px;">
+            <thead>
+                <tr>
+                    <th>Secciones con mayor impacto</th>
+                    <th class="centrado">Casos</th>
+                    <th class="centrado">Minutos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in top_secciones %}
+                <tr>
+                    <td>{{ item.nombre }}</td>
+                    <td class="centrado">{{ item.casos }}</td>
+                    <td class="centrado">{{ item.minutos }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="centrado">Sin datos</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>Programas con mayor impacto</th>
+                    <th class="centrado">Casos</th>
+                    <th class="centrado">Minutos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in top_programas %}
+                <tr>
+                    <td>{{ item.nombre }}</td>
+                    <td class="centrado">{{ item.casos }}</td>
+                    <td class="centrado">{{ item.minutos }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="centrado">Sin datos</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="seccion">
+        <h2>Conclusiones automáticas</h2>
+        <ul class="lista">
+            {% for item in conclusiones %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>

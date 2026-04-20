@@ -8,17 +8,14 @@
     <style>
         :root{
             --fondo:#f3f5f8;
-            --fondo-suave:#eef2f7;
             --card:#ffffff;
             --linea:#d9e1ea;
             --linea-suave:#e8edf3;
             --texto:#1f2937;
             --texto-suave:#6b7280;
-            --texto-claro:#94a3b8;
 
             --marca:#c8102e;
             --marca-oscura:#9f1027;
-            --marca-suave:#fff1f2;
 
             --azul:#0f4c81;
             --azul-suave:#eef6ff;
@@ -38,164 +35,199 @@
             --gris-fondo:#e5e7eb;
             --gris-texto:#374151;
 
-            --sombra-suave:0 10px 30px rgba(15, 23, 42, 0.06);
-            --sombra-media:0 18px 40px rgba(15, 23, 42, 0.08);
-            --radio-xl:22px;
-            --radio-lg:18px;
-            --radio-md:14px;
-            --radio-sm:10px;
+            --sombra-suave:0 8px 24px rgba(15, 23, 42, 0.06);
+            --sombra-media:0 14px 34px rgba(15, 23, 42, 0.08);
         }
 
         *{
             box-sizing:border-box;
         }
 
-        html{
-            scroll-behavior:smooth;
-        }
-
         body{
             margin:0;
             padding:0;
             font-family: Arial, sans-serif;
-            background:linear-gradient(180deg, #f8fafc 0%, #f3f5f8 220px, #f3f5f8 100%);
+            background:linear-gradient(180deg, #f8fafc 0%, #f3f5f8 180px, #f3f5f8 100%);
             color:var(--texto);
         }
 
         .contenedor{
             max-width:1320px;
             margin:0 auto;
-            padding:18px;
+            padding:14px;
+        }
+
+        .barra-sesion{
+            display:flex;
+            justify-content:flex-end;
+            align-items:center;
+            gap:10px;
+            margin-bottom:10px;
+        }
+
+        .usuario-sesion{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            padding:9px 12px;
+            border-radius:999px;
+            background:#ffffff;
+            border:1px solid var(--linea-suave);
+            box-shadow:var(--sombra-suave);
+            font-size:12px;
+            color:#475569;
+            font-weight:bold;
+        }
+
+        .usuario-sesion__punto{
+            width:8px;
+            height:8px;
+            border-radius:50%;
+            background:#16a34a;
+            display:inline-block;
+        }
+
+        .formulario-cierre{
+            margin:0;
+        }
+
+        .boton-cerrar-sesion{
+            min-height:40px;
+            border:none;
+            border-radius:12px;
+            padding:10px 14px;
+            font-size:13px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:all 0.2s ease;
+            background:#ffffff;
+            color:#111827;
+            border:1px solid var(--linea);
+            box-shadow:var(--sombra-suave);
+        }
+
+        .boton-cerrar-sesion:hover{
+            background:#f8fafc;
+        }
+
+        .aviso-sesion{
+            display:none;
+            margin-bottom:12px;
+            border-radius:12px;
+            padding:11px 12px;
+            font-size:13px;
+            line-height:1.45;
+            background:#fff7ed;
+            color:#9a3412;
+            border:1px solid #fed7aa;
         }
 
         .card{
             background:var(--card);
             border:1px solid var(--linea-suave);
-            border-radius:var(--radio-xl);
+            border-radius:20px;
             box-shadow:var(--sombra-suave);
-            padding:20px;
-            margin-bottom:16px;
+            padding:16px;
+            margin-bottom:12px;
         }
 
         .card-compacta{
-            padding:16px 18px;
+            padding:14px 16px;
         }
 
         .titulo-seccion{
-            margin:0 0 6px 0;
-            font-size:22px;
+            margin:0 0 4px 0;
+            font-size:18px;
             color:#111827;
         }
 
         .texto-apoyo{
             margin:0;
             color:var(--texto-suave);
-            font-size:14px;
-            line-height:1.55;
+            font-size:13px;
+            line-height:1.45;
         }
 
         .banner-principal{
             position:relative;
             overflow:hidden;
-            background:linear-gradient(135deg, rgba(200,16,46,0.98) 0%, rgba(159,16,39,0.98) 45%, rgba(15,76,129,0.96) 100%);
+            background:linear-gradient(135deg, rgba(200,16,46,0.98) 0%, rgba(159,16,39,0.98) 58%, rgba(15,76,129,0.96) 100%);
             color:#ffffff;
-            padding:20px 22px;
-            border-radius:24px;
+            padding:14px 18px;
+            border-radius:22px;
             box-shadow:var(--sombra-media);
-            margin-bottom:16px;
+            margin-bottom:12px;
         }
 
         .banner-principal::before{
             content:"";
             position:absolute;
-            right:-50px;
-            top:-50px;
-            width:150px;
-            height:150px;
+            right:-38px;
+            top:-38px;
+            width:120px;
+            height:120px;
             background:rgba(255,255,255,0.08);
             border-radius:50%;
         }
 
-        .banner-contenido{
+        .banner-fila{
             position:relative;
             z-index:2;
-            display:grid;
-            grid-template-columns:1.5fr 0.85fr;
-            gap:18px;
+            display:flex;
             align-items:center;
+            justify-content:space-between;
+            gap:16px;
         }
 
         .sede-etiqueta{
             display:inline-block;
-            padding:7px 12px;
+            padding:6px 11px;
             border-radius:999px;
-            background:rgba(255,255,255,0.14);
-            border:1px solid rgba(255,255,255,0.22);
-            font-size:12px;
+            background:rgba(255,255,255,0.15);
+            border:1px solid rgba(255,255,255,0.20);
+            font-size:11px;
             font-weight:bold;
-            letter-spacing:0.3px;
-            margin-bottom:10px;
+            letter-spacing:0.25px;
+            margin-bottom:8px;
         }
 
         .banner-titulo{
-            margin:0 0 6px 0;
-            font-size:34px;
+            margin:0 0 4px 0;
+            font-size:28px;
             line-height:1.05;
             font-weight:bold;
         }
 
         .banner-subtitulo{
             margin:0;
-            font-size:14px;
-            line-height:1.55;
-            max-width:780px;
-            color:rgba(255,255,255,0.92);
-        }
-
-        .banner-panel{
-            background:rgba(255,255,255,0.10);
-            border:1px solid rgba(255,255,255,0.16);
-            border-radius:18px;
-            padding:14px;
-            backdrop-filter: blur(4px);
-        }
-
-        .banner-panel-titulo{
-            margin:0 0 10px 0;
-            font-size:14px;
-            font-weight:bold;
-        }
-
-        .banner-panel-lista{
-            display:grid;
-            gap:8px;
-        }
-
-        .banner-panel-item{
-            display:flex;
-            gap:8px;
-            align-items:flex-start;
             font-size:13px;
-            line-height:1.4;
-            color:rgba(255,255,255,0.94);
+            line-height:1.45;
+            color:rgba(255,255,255,0.92);
+            max-width:820px;
         }
 
-        .banner-panel-item span{
+        .banner-lado{
+            min-width:220px;
+            display:flex;
+            justify-content:flex-end;
+        }
+
+        .banner-chip{
             display:inline-flex;
             align-items:center;
             justify-content:center;
-            width:20px;
-            height:20px;
-            border-radius:50%;
-            background:rgba(255,255,255,0.18);
-            flex-shrink:0;
+            padding:10px 14px;
+            border-radius:14px;
+            background:rgba(255,255,255,0.12);
+            border:1px solid rgba(255,255,255,0.18);
+            font-size:12px;
             font-weight:bold;
-            font-size:11px;
+            text-align:center;
         }
 
         .franja-carga{
             display:grid;
-            grid-template-columns:1.5fr 220px 170px;
+            grid-template-columns:1fr 150px;
             gap:10px;
             align-items:end;
         }
@@ -203,10 +235,10 @@
         .campo label{
             display:block;
             margin-bottom:5px;
-            font-size:12px;
+            font-size:11px;
             font-weight:bold;
             text-transform:uppercase;
-            letter-spacing:0.4px;
+            letter-spacing:0.35px;
             color:#475569;
         }
 
@@ -217,14 +249,14 @@
             border:1px solid var(--linea);
             background:#ffffff;
             border-radius:12px;
-            padding:11px 13px;
-            min-height:44px;
-            font-size:14px;
+            padding:10px 12px;
+            min-height:42px;
+            font-size:13px;
             color:var(--texto);
         }
 
         .campo input[type="file"]{
-            padding:9px 12px;
+            padding:8px 10px;
         }
 
         .acciones-carga{
@@ -232,22 +264,43 @@
             align-items:end;
         }
 
+        .acciones-carga-secundarias{
+            display:flex;
+            justify-content:flex-end;
+            margin-top:10px;
+        }
+
+        .formulario-reporte{
+            width:100%;
+            display:flex;
+            justify-content:flex-end;
+        }
+
+        .boton-reporte{
+            width:auto;
+            min-width:190px;
+        }
+
         .boton{
             width:100%;
-            min-height:44px;
+            min-height:42px;
             border:none;
             border-radius:12px;
-            padding:12px 16px;
-            font-size:14px;
+            padding:11px 14px;
+            font-size:13px;
             font-weight:bold;
             cursor:pointer;
             transition:all 0.2s ease;
+            text-decoration:none;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
         }
 
         .boton-principal{
             background:var(--marca);
             color:#ffffff;
-            box-shadow:0 8px 20px rgba(200,16,46,0.18);
+            box-shadow:0 8px 18px rgba(200,16,46,0.18);
         }
 
         .boton-principal:hover{
@@ -265,12 +318,18 @@
             background:#eef2f7;
         }
 
+        .boton-deshabilitado{
+            opacity:0.55;
+            pointer-events:none;
+            cursor:not-allowed;
+        }
+
         .mensaje{
-            margin-top:12px;
-            border-radius:14px;
-            padding:12px 14px;
-            font-size:14px;
-            line-height:1.5;
+            margin-top:10px;
+            border-radius:12px;
+            padding:11px 12px;
+            font-size:13px;
+            line-height:1.45;
         }
 
         .ok{
@@ -285,22 +344,38 @@
             border:1px solid #fecdd3;
         }
 
-        .panel-apertura{
+        .estado-hero{
             display:grid;
-            grid-template-columns:1fr 1.35fr;
-            gap:16px;
-            margin-bottom:16px;
+            grid-template-columns:1.15fr 0.85fr;
+            gap:12px;
+            margin-bottom:12px;
         }
 
-        .estado-global{
-            height:100%;
-            display:flex;
-            flex-direction:column;
-            justify-content:space-between;
-            background:linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+        .alerta-principal{
+            border-radius:20px;
+            padding:18px;
+            color:#111827;
+            border:1px solid var(--linea-suave);
+            background:#ffffff;
+            box-shadow:var(--sombra-suave);
         }
 
-        .estado-global-top{
+        .alerta-principal.controlado{
+            background:linear-gradient(180deg, #ffffff 0%, #f4fff8 100%);
+            border-color:#bbf7d0;
+        }
+
+        .alerta-principal.atencion{
+            background:linear-gradient(180deg, #ffffff 0%, #fffaf0 100%);
+            border-color:#fde68a;
+        }
+
+        .alerta-principal.critico{
+            background:linear-gradient(180deg, #ffffff 0%, #fff4f4 100%);
+            border-color:#fecaca;
+        }
+
+        .alerta-superior{
             display:flex;
             align-items:flex-start;
             justify-content:space-between;
@@ -308,192 +383,197 @@
             margin-bottom:14px;
         }
 
-        .estado-global-titulo{
-            margin:0 0 6px 0;
-            font-size:22px;
-            color:#111827;
-        }
-
-        .estado-global-texto{
-            margin:0;
-            color:var(--texto-suave);
-            font-size:14px;
-            line-height:1.55;
-        }
-
-        .estado-chip{
+        .alerta-etiqueta{
             display:inline-flex;
             align-items:center;
             gap:8px;
-            padding:9px 12px;
+            padding:8px 12px;
             border-radius:999px;
-            font-size:12px;
+            font-size:11px;
             font-weight:bold;
             white-space:nowrap;
         }
 
-        .estado-chip::before{
+        .alerta-etiqueta::before{
             content:"";
-            width:9px;
-            height:9px;
+            width:8px;
+            height:8px;
             border-radius:50%;
             background:currentColor;
-            opacity:0.85;
         }
 
-        .estado-chip-controlado{
+        .alerta-etiqueta.controlado{
             background:var(--verde-fondo);
             color:var(--verde-texto);
         }
 
-        .estado-chip-atencion{
+        .alerta-etiqueta.atencion{
             background:var(--amarillo-fondo);
             color:var(--amarillo-texto);
         }
 
-        .estado-chip-critico{
+        .alerta-etiqueta.critico{
             background:var(--rojo-fondo);
             color:var(--rojo-texto);
         }
 
-        .mini-resumen{
-            display:grid;
-            grid-template-columns:repeat(2, 1fr);
-            gap:10px;
-        }
-
-        .mini-indicador{
-            border:1px solid var(--linea-suave);
-            border-radius:14px;
-            padding:12px;
-            background:#f8fafc;
-        }
-
-        .mini-indicador-etiqueta{
-            font-size:11px;
-            color:#64748b;
-            margin-bottom:6px;
-            text-transform:uppercase;
-            letter-spacing:0.3px;
-            font-weight:bold;
-        }
-
-        .mini-indicador-valor{
-            font-size:22px;
-            font-weight:bold;
+        .alerta-titulo{
+            margin:0 0 6px 0;
+            font-size:28px;
+            line-height:1.05;
             color:#111827;
         }
 
-        .lectura-ejecutiva{
+        .alerta-texto{
+            margin:0;
+            color:var(--texto-suave);
+            font-size:14px;
+            line-height:1.5;
+            max-width:760px;
+        }
+
+        .alerta-metricas{
             display:grid;
             grid-template-columns:repeat(3, 1fr);
             gap:10px;
+            margin-top:14px;
         }
 
-        .lectura-item{
+        .alerta-metrica{
+            background:#ffffff;
+            border:1px solid var(--linea-suave);
+            border-radius:14px;
+            padding:12px;
+        }
+
+        .alerta-metrica-label{
+            font-size:10px;
+            text-transform:uppercase;
+            letter-spacing:0.3px;
+            color:#64748b;
+            font-weight:bold;
+            margin-bottom:5px;
+        }
+
+        .alerta-metrica-valor{
+            font-size:24px;
+            font-weight:bold;
+            color:#111827;
+            line-height:1;
+        }
+
+        .panel-accion{
+            display:grid;
+            gap:10px;
+        }
+
+        .panel-accion-card{
+            background:#ffffff;
             border:1px solid var(--linea-suave);
             border-radius:16px;
             padding:14px;
-            background:#ffffff;
+            box-shadow:var(--sombra-suave);
         }
 
-        .lectura-item h4{
-            margin:0 0 8px 0;
+        .panel-accion-card h3{
+            margin:0 0 6px 0;
             font-size:14px;
             color:#0f172a;
         }
 
-        .lectura-item p{
+        .panel-accion-card p{
             margin:0;
-            color:#64748b;
             font-size:13px;
-            line-height:1.5;
-        }
-
-        .kpis{
-            display:grid;
-            grid-template-columns:repeat(5, 1fr);
-            gap:12px;
-            margin-bottom:16px;
-        }
-
-        .kpi{
-            border:1px solid var(--linea-suave);
-            background:linear-gradient(180deg, #ffffff 0%, #fafcff 100%);
-            border-radius:18px;
-            padding:16px;
-            min-height:104px;
-            display:flex;
-            flex-direction:column;
-            justify-content:space-between;
-        }
-
-        .kpi-superior{
-            display:flex;
-            justify-content:space-between;
-            align-items:flex-start;
-            gap:10px;
-        }
-
-        .kpi-etiqueta{
+            line-height:1.45;
             color:#64748b;
-            font-size:12px;
-            line-height:1.4;
-            font-weight:bold;
         }
 
-        .kpi-badge{
-            display:inline-flex;
-            align-items:center;
-            justify-content:center;
-            min-width:32px;
-            height:32px;
-            border-radius:11px;
-            font-size:12px;
-            font-weight:bold;
-            background:#f1f5f9;
-            color:#334155;
+        .panel-accion-card.destacado{
+            background:var(--azul-suave);
+            border-color:#dbeafe;
         }
 
-        .kpi-valor{
-            font-size:30px;
-            line-height:1;
-            font-weight:bold;
-            color:#111827;
-            margin-top:6px;
+        .panel-accion-card.destacado h3{
+            color:var(--azul);
         }
 
-        .kpi-pie{
-            margin-top:8px;
-            color:#94a3b8;
-            font-size:11px;
-            line-height:1.4;
-        }
-
-        .bloque-filtros{
+        .card-filtros{
             display:grid;
-            grid-template-columns:1.4fr 1fr 1fr 1fr 150px;
+            grid-template-columns:1fr 1fr 1fr 1fr 1.2fr 140px;
             gap:10px;
             align-items:end;
         }
 
-        .dos-columnas{
+        .ranking-kpis{
             display:grid;
-            grid-template-columns:1.15fr 0.95fr;
-            gap:16px;
-            margin-bottom:16px;
+            grid-template-columns:1.18fr 0.82fr;
+            gap:12px;
+            margin-bottom:12px;
+        }
+
+        .encabezado-ranking{
+            display:flex;
+            align-items:flex-start;
+            justify-content:space-between;
+            gap:12px;
+            margin-bottom:8px;
+        }
+
+        .controles-ranking{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+            min-width:240px;
+        }
+
+        .texto-ranking-visible{
+            font-size:12px;
+            color:#64748b;
+            line-height:1.4;
+            text-align:right;
+        }
+
+        .grupo-toggle{
+            display:flex;
+            justify-content:flex-end;
+            gap:6px;
+            flex-wrap:wrap;
+        }
+
+        .boton-toggle{
+            min-height:36px;
+            padding:8px 12px;
+            border-radius:10px;
+            border:1px solid var(--linea);
+            background:#ffffff;
+            color:#334155;
+            font-size:12px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:all 0.2s ease;
+        }
+
+        .boton-toggle:hover{
+            background:#f8fafc;
+        }
+
+        .boton-toggle.activo{
+            background:#0f4c81;
+            border-color:#0f4c81;
+            color:#ffffff;
+            box-shadow:0 8px 18px rgba(15, 76, 129, 0.15);
         }
 
         .tabla{
             width:100%;
             border-collapse:collapse;
-            font-size:13px;
+            font-size:12px;
         }
 
         .tabla th,
         .tabla td{
             border-bottom:1px solid var(--linea-suave);
-            padding:11px 10px;
+            padding:10px 9px;
             text-align:left;
             vertical-align:top;
         }
@@ -504,28 +584,28 @@
             z-index:2;
             background:#f8fafc;
             color:#334155;
-            font-size:12px;
+            font-size:11px;
             text-transform:uppercase;
-            letter-spacing:0.3px;
+            letter-spacing:0.25px;
         }
 
         .tabla-contenedor{
             overflow-x:auto;
         }
 
-        .tabla-scroll{
+        .tabla-ranking-scroll{
             max-height:420px;
             overflow:auto;
             border:1px solid var(--linea-suave);
-            border-radius:16px;
+            border-radius:14px;
             background:#ffffff;
         }
 
-        .tabla-ranking-scroll{
-            max-height:380px;
+        .tabla-scroll{
+            max-height:360px;
             overflow:auto;
             border:1px solid var(--linea-suave);
-            border-radius:16px;
+            border-radius:14px;
             background:#ffffff;
         }
 
@@ -545,19 +625,20 @@
         .estado,
         .semaforo{
             display:inline-block;
-            padding:6px 10px;
+            padding:5px 9px;
             border-radius:999px;
-            font-size:12px;
+            font-size:11px;
             font-weight:bold;
             white-space:nowrap;
         }
 
-        .estado-verde, .semaforo-bajo{
+        .estado-verde{
             background:var(--verde-fondo);
             color:var(--verde-texto);
         }
 
-        .estado-amarillo{
+        .estado-amarillo,
+        .semaforo-bajo{
             background:var(--amarillo-fondo);
             color:var(--amarillo-texto);
         }
@@ -567,7 +648,8 @@
             color:var(--naranjo-texto);
         }
 
-        .estado-rojo, .semaforo-alto{
+        .estado-rojo,
+        .semaforo-alto{
             background:var(--rojo-fondo);
             color:var(--rojo-texto);
         }
@@ -578,97 +660,124 @@
         }
 
         .semaforo-medio{
-            background:var(--amarillo-fondo);
-            color:var(--amarillo-texto);
+            background:var(--naranjo-fondo);
+            color:var(--naranjo-texto);
         }
 
         .subtitulo-tabla{
-            margin:0 0 12px 0;
+            margin:0 0 10px 0;
             color:var(--texto-suave);
-            font-size:14px;
-            line-height:1.5;
+            font-size:12px;
+            line-height:1.45;
         }
 
-        .numero-destacado{
+        .kpis{
+            display:grid;
+            grid-template-columns:repeat(3, 1fr);
+            gap:10px;
+        }
+
+        .kpi{
+            border:1px solid var(--linea-suave);
+            background:linear-gradient(180deg, #ffffff 0%, #fafcff 100%);
+            border-radius:16px;
+            padding:13px;
+            min-height:96px;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
+        }
+
+        .kpi-superior{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:8px;
+        }
+
+        .kpi-etiqueta{
+            color:#64748b;
+            font-size:11px;
+            line-height:1.35;
+            font-weight:bold;
+        }
+
+        .kpi-badge{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            min-width:28px;
+            height:28px;
+            border-radius:10px;
+            font-size:11px;
+            font-weight:bold;
+            background:#f1f5f9;
+            color:#334155;
+        }
+
+        .kpi-valor{
+            font-size:28px;
+            line-height:1;
             font-weight:bold;
             color:#111827;
+            margin-top:4px;
+        }
+
+        .kpi-pie{
+            margin-top:6px;
+            color:#94a3b8;
+            font-size:10px;
+            line-height:1.35;
         }
 
         .insights-grid{
             display:grid;
-            grid-template-columns:repeat(2, 1fr);
-            gap:12px;
+            grid-template-columns:repeat(3, 1fr);
+            gap:10px;
         }
 
         .insight{
             border:1px solid var(--linea-suave);
             background:linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
-            border-radius:16px;
-            padding:14px;
+            border-radius:14px;
+            padding:12px;
         }
 
         .insight h4{
-            margin:0 0 8px 0;
-            font-size:15px;
+            margin:0 0 6px 0;
+            font-size:13px;
             color:#0f172a;
         }
 
         .insight p{
             margin:0;
             color:#64748b;
-            font-size:14px;
-            line-height:1.5;
+            font-size:12px;
+            line-height:1.45;
         }
 
-        .caja-lectura{
-            display:grid;
-            gap:12px;
-        }
-
-        .bloque-recomendacion{
-            border:1px solid #dbeafe;
-            background:var(--azul-suave);
-            border-radius:16px;
-            padding:14px;
-        }
-
-        .bloque-recomendacion h4{
-            margin:0 0 8px 0;
-            font-size:14px;
-            color:var(--azul);
-        }
-
-        .bloque-recomendacion p{
-            margin:0;
-            color:#35506d;
-            font-size:14px;
-            line-height:1.5;
-        }
-
-        .sin-datos{
-            text-align:center;
-            color:var(--texto-suave);
-            padding:22px 16px;
+        .panel-docente{
+            display:block;
         }
 
         .detalle-titulo{
             display:flex;
             align-items:flex-start;
             justify-content:space-between;
-            gap:12px;
-            margin-bottom:12px;
+            gap:10px;
+            margin-bottom:10px;
         }
 
         .detalle-badge{
             display:inline-flex;
             align-items:center;
-            gap:8px;
-            padding:8px 12px;
+            gap:6px;
+            padding:7px 10px;
             border-radius:999px;
             background:#f8fafc;
             border:1px solid var(--linea);
             color:#334155;
-            font-size:12px;
+            font-size:11px;
             font-weight:bold;
             white-space:nowrap;
         }
@@ -677,152 +786,133 @@
             color:#111827;
         }
 
-        .pie-analisis{
-            margin-top:10px;
-            color:#94a3b8;
-            font-size:12px;
-            line-height:1.45;
+        .detalle-acciones{
+            display:flex;
+            flex-direction:column;
+            align-items:flex-end;
+            gap:8px;
         }
 
-        .panel-docente{
-            display:none;
-        }
-
-        .panel-docente.visible{
-            display:block;
+        .boton-reporte-docente{
+            min-width:240px;
         }
 
         .resumen-docente{
             display:grid;
             grid-template-columns:repeat(4, 1fr);
-            gap:10px;
-            margin-bottom:14px;
+            gap:8px;
+            margin-bottom:10px;
         }
 
         .resumen-docente-item{
             border:1px solid var(--linea-suave);
-            border-radius:14px;
-            padding:12px;
+            border-radius:12px;
+            padding:10px;
             background:#f8fafc;
         }
 
         .resumen-docente-label{
-            font-size:11px;
+            font-size:10px;
             text-transform:uppercase;
-            letter-spacing:0.3px;
+            letter-spacing:0.25px;
             color:#64748b;
             font-weight:bold;
-            margin-bottom:6px;
+            margin-bottom:5px;
         }
 
         .resumen-docente-valor{
-            font-size:22px;
+            font-size:20px;
             font-weight:bold;
             color:#111827;
         }
 
         .resumen-docente-texto{
-            font-size:13px;
+            font-size:12px;
             color:#64748b;
-            line-height:1.5;
-            margin-bottom:12px;
+            line-height:1.45;
+            margin-bottom:10px;
         }
 
         .estado-vacio{
             text-align:center;
-            padding:28px 18px;
+            padding:22px 16px;
             border:1px dashed var(--linea);
-            border-radius:16px;
+            border-radius:14px;
             background:#fafcff;
             color:#64748b;
-            font-size:14px;
-            line-height:1.6;
+            font-size:13px;
+            line-height:1.5;
+        }
+
+        .sin-datos{
+            text-align:center;
+            color:var(--texto-suave);
+            padding:18px 14px;
+        }
+
+        .pie-analisis{
+            margin-top:8px;
+            color:#94a3b8;
+            font-size:11px;
+            line-height:1.4;
         }
 
         @media (max-width: 1180px){
-            .banner-contenido{
+            .banner-fila,
+            .estado-hero,
+            .ranking-kpis{
                 grid-template-columns:1fr;
+                display:grid;
             }
 
-            .panel-apertura{
-                grid-template-columns:1fr;
+            .alerta-metricas,
+            .insights-grid,
+            .kpis,
+            .resumen-docente{
+                grid-template-columns:repeat(2, 1fr);
             }
 
-            .kpis{
-                grid-template-columns:repeat(3, 1fr);
-            }
-
-            .dos-columnas{
-                grid-template-columns:1fr;
-            }
-
-            .bloque-filtros{
+            .card-filtros{
                 grid-template-columns:repeat(2, 1fr);
             }
 
             .franja-carga{
-                grid-template-columns:1fr 1fr;
-            }
-
-            .acciones-carga{
-                grid-column:1 / -1;
-            }
-
-            .lectura-ejecutiva{
                 grid-template-columns:1fr;
             }
 
-            .resumen-docente{
-                grid-template-columns:repeat(2, 1fr);
+            .barra-sesion{
+                flex-direction:column;
+                align-items:stretch;
+            }
+
+            .encabezado-ranking{
+                flex-direction:column;
+                align-items:stretch;
+            }
+
+            .controles-ranking{
+                min-width:100%;
+            }
+
+            .texto-ranking-visible{
+                text-align:left;
+            }
+
+            .grupo-toggle{
+                justify-content:flex-start;
+            }
+
+            .detalle-acciones{
+                align-items:stretch;
             }
         }
 
         @media (max-width: 820px){
             .contenedor{
-                padding:14px;
+                padding:12px;
             }
 
             .banner-principal{
-                padding:18px 16px;
-                border-radius:20px;
-            }
-
-            .banner-titulo{
-                font-size:28px;
-            }
-
-            .kpis{
-                grid-template-columns:repeat(2, 1fr);
-            }
-
-            .insights-grid{
-                grid-template-columns:1fr;
-            }
-
-            .bloque-filtros{
-                grid-template-columns:1fr;
-            }
-
-            .franja-carga{
-                grid-template-columns:1fr;
-            }
-
-            .mini-resumen{
-                grid-template-columns:1fr 1fr;
-            }
-
-            .detalle-titulo{
-                flex-direction:column;
-            }
-        }
-
-        @media (max-width: 560px){
-            .card{
-                padding:14px;
-                border-radius:18px;
-            }
-
-            .card-compacta{
                 padding:14px;
             }
 
@@ -830,29 +920,37 @@
                 font-size:24px;
             }
 
-            .banner-subtitulo{
-                font-size:13px;
-            }
-
-            .kpis{
-                grid-template-columns:1fr;
-            }
-
-            .mini-resumen{
-                grid-template-columns:1fr;
-            }
-
+            .card-filtros,
+            .insights-grid,
+            .kpis,
+            .alerta-metricas,
             .resumen-docente{
                 grid-template-columns:1fr;
             }
 
-            .kpi-valor{
-                font-size:28px;
+            .detalle-titulo{
+                flex-direction:column;
+                align-items:stretch;
+            }
+        }
+
+        @media (max-width: 560px){
+            .card{
+                padding:13px;
+                border-radius:16px;
             }
 
-            .titulo-seccion,
-            .estado-global-titulo{
-                font-size:20px;
+            .banner-titulo{
+                font-size:22px;
+            }
+
+            .alerta-titulo{
+                font-size:24px;
+            }
+
+            .kpi-valor,
+            .alerta-metrica-valor{
+                font-size:24px;
             }
         }
     </style>
@@ -861,40 +959,52 @@
 
     <div class="contenedor">
 
+        <div class="barra-sesion">
+            <div class="usuario-sesion">
+                <span class="usuario-sesion__punto"></span>
+                <span>
+                    Conectado como:
+                    <strong>
+                        {% if user.get_full_name %}
+                            {{ user.get_full_name }}
+                        {% else %}
+                            {{ user.username }}
+                        {% endif %}
+                    </strong>
+                </span>
+            </div>
+
+            <form method="post" action="/logout/" class="formulario-cierre">
+                {% csrf_token %}
+                <button type="submit" class="boton-cerrar-sesion">
+                    Cerrar sesión
+                </button>
+            </form>
+        </div>
+
+        <div id="aviso-cierre-sesion" class="aviso-sesion">
+            Por seguridad, tu sesión se cerrará pronto por inactividad.
+        </div>
+
         <section class="banner-principal">
-            <div class="banner-contenido">
+            <div class="banner-fila">
                 <div>
                     <div class="sede-etiqueta">INACAP Sede Arica</div>
                     <h1 class="banner-titulo">Control de Atrasos Docentes</h1>
                     <p class="banner-subtitulo">
-                        Panel institucional para identificar casos críticos, priorizar seguimiento y apoyar decisiones académicas de forma rápida y focalizada.
+                        Panel ejecutivo para identificar criticidad, priorizar seguimiento y apoyar decisiones académicas con rapidez.
                     </p>
                 </div>
-
-                <div class="banner-panel">
-                    <h3 class="banner-panel-titulo">Uso esperado</h3>
-                    <div class="banner-panel-lista">
-                        <div class="banner-panel-item">
-                            <span>1</span>
-                            <div>Visualizar rápidamente el nivel de criticidad de la carga.</div>
-                        </div>
-                        <div class="banner-panel-item">
-                            <span>2</span>
-                            <div>Detectar docentes prioritarios para seguimiento académico.</div>
-                        </div>
-                        <div class="banner-panel-item">
-                            <span>3</span>
-                            <div>Revisar detalle solo cuando realmente sea necesario.</div>
-                        </div>
-                    </div>
+                <div class="banner-lado">
+                    <div class="banner-chip">Lectura rápida para Dirección Académica</div>
                 </div>
             </div>
         </section>
 
         <section class="card card-compacta">
-            <h2 class="titulo-seccion">Carga rápida de archivo</h2>
-            <p class="texto-apoyo" style="margin-bottom:12px;">
-                La carga del Excel es solo el punto de entrada. El foco principal del sistema está en el análisis ejecutivo y la priorización de casos.
+            <h2 class="titulo-seccion">Carga de archivo</h2>
+            <p class="texto-apoyo" style="margin-bottom:10px;">
+                La carga habilita el análisis. El foco principal está en la interpretación ejecutiva del resultado.
             </p>
 
             <form method="post" enctype="multipart/form-data">
@@ -906,19 +1016,21 @@
                         <input id="archivo" type="file" name="archivo" accept=".xls,.xlsx" required>
                     </div>
 
-                    <div class="campo">
-                        <label for="criterio_orden">Orden del ranking</label>
-                        <select id="criterio_orden" name="criterio_orden">
-                            <option value="cantidad" {% if criterio_orden == "cantidad" %}selected{% endif %}>Cantidad de atrasos</option>
-                            <option value="minutos" {% if criterio_orden == "minutos" %}selected{% endif %}>Minutos acumulados</option>
-                        </select>
-                    </div>
-
                     <div class="acciones-carga">
-                        <button class="boton boton-principal" type="submit">Analizar archivo</button>
+                        <button class="boton boton-principal" type="submit">Analizar</button>
                     </div>
                 </div>
             </form>
+
+            {% if total_registros %}
+            <div class="acciones-carga-secundarias">
+                <form method="get" action="{% url 'atrasos:reporte_pdf' %}" class="formulario-reporte">
+                    <button class="boton boton-secundario boton-reporte" type="submit">
+                        Generar reporte PDF
+                    </button>
+                </form>
+            </div>
+            {% endif %}
 
             {% if mensaje %}
                 <div class="mensaje ok">{{ mensaje }}</div>
@@ -930,128 +1042,69 @@
         </section>
 
         {% if total_registros %}
-        {{ detalle_json|json_script:"detalle-datos" }}
+        {{ detalle_visible_json|json_script:"detalle-visible-datos" }}
+        {{ detalle_completo_json|json_script:"detalle-completo-datos" }}
+        {{ top_docentes_json|json_script:"top-docentes-datos" }}
 
-        <section class="panel-apertura">
-            <div class="card estado-global">
-                <div class="estado-global-top">
+        <section class="estado-hero">
+            <div id="alerta-principal" class="alerta-principal">
+                <div class="alerta-superior">
                     <div>
-                        <h2 class="estado-global-titulo">Estado general de la carga</h2>
-                        <p class="estado-global-texto" id="texto-estado-general">
-                            Lectura rápida del comportamiento observado para apoyar decisiones académicas.
-                        </p>
-                    </div>
-                    <div id="chip-estado-general" class="estado-chip estado-chip-controlado">Situación controlada</div>
-                </div>
-
-                <div class="mini-resumen">
-                    <div class="mini-indicador">
-                        <div class="mini-indicador-etiqueta">Registros analizados</div>
-                        <div class="mini-indicador-valor" id="mini-total-registros">{{ total_registros }}</div>
-                    </div>
-                    <div class="mini-indicador">
-                        <div class="mini-indicador-etiqueta">% con atraso</div>
-                        <div class="mini-indicador-valor" id="mini-porcentaje-atraso">0%</div>
-                    </div>
-                    <div class="mini-indicador">
-                        <div class="mini-indicador-etiqueta">Docentes prioritarios</div>
-                        <div class="mini-indicador-valor" id="mini-docentes-prioritarios">0</div>
-                    </div>
-                    <div class="mini-indicador">
-                        <div class="mini-indicador-etiqueta">Promedio atraso</div>
-                        <div class="mini-indicador-valor" id="mini-promedio-atraso">{{ promedio_atraso }}</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2 class="titulo-seccion">Lectura ejecutiva inicial</h2>
-                <p class="texto-apoyo" style="margin-bottom:12px;">
-                    Este bloque resume lo más importante para orientar seguimiento inmediato y priorización directiva.
-                </p>
-
-                <div class="lectura-ejecutiva">
-                    <div class="lectura-item">
-                        <h4>Severidad observada</h4>
-                        <p id="lectura-severidad">
-                            Se procesó la carga y se evaluará el nivel de criticidad según cantidad de atrasos y minutos acumulados.
-                        </p>
-                    </div>
-
-                    <div class="lectura-item">
-                        <h4>Foco de seguimiento</h4>
-                        <p id="lectura-foco">
-                            El sistema identificará docentes con impacto alto o medio para priorizar revisión.
-                        </p>
-                    </div>
-
-                    <div class="lectura-item">
-                        <h4>Recomendación inicial</h4>
-                        <p id="lectura-recomendacion">
-                            La lectura ejecutiva se actualizará automáticamente según los filtros aplicados.
+                        <div id="etiqueta-alerta" class="alerta-etiqueta controlado">Situación controlada</div>
+                        <h2 id="titulo-alerta" class="alerta-titulo">Situación controlada</h2>
+                        <p id="texto-alerta" class="alerta-texto">
+                            La carga actual presenta una situación manejable, con seguimiento acotado y sin concentración crítica relevante.
                         </p>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section class="kpis">
-            <div class="kpi">
-                <div class="kpi-superior">
-                    <div class="kpi-etiqueta">Total de registros analizados</div>
-                    <div class="kpi-badge">R</div>
+                <div class="alerta-metricas">
+                    <div class="alerta-metrica">
+                        <div class="alerta-metrica-label">Docentes prioritarios</div>
+                        <div class="alerta-metrica-valor" id="mini-docentes-prioritarios">0</div>
+                    </div>
+                    <div class="alerta-metrica">
+                        <div class="alerta-metrica-label">% con atraso</div>
+                        <div class="alerta-metrica-valor" id="mini-porcentaje-atraso">0%</div>
+                    </div>
+                    <div class="alerta-metrica">
+                        <div class="alerta-metrica-label">Promedio atraso</div>
+                        <div class="alerta-metrica-valor" id="mini-promedio-atraso">{{ promedio_atraso }}</div>
+                    </div>
                 </div>
-                <div class="kpi-valor" id="kpi-total-registros">{{ total_registros }}</div>
-                <div class="kpi-pie">Base total procesada desde el archivo actual.</div>
-            </div>
-
-            <div class="kpi">
-                <div class="kpi-superior">
-                    <div class="kpi-etiqueta">Registros con atraso</div>
-                    <div class="kpi-badge">A</div>
-                </div>
-                <div class="kpi-valor" id="kpi-total-atrasos">{{ total_atrasos }}</div>
-                <div class="kpi-pie">Casos que requieren atención por atraso efectivo.</div>
             </div>
 
-            <div class="kpi">
-                <div class="kpi-superior">
-                    <div class="kpi-etiqueta">Registros a tiempo</div>
-                    <div class="kpi-badge">T</div>
+            <div class="panel-accion">
+                <div class="panel-accion-card destacado">
+                    <h3>Acción recomendada</h3>
+                    <p id="texto-accion-sugerida">
+                        Prioriza revisión sobre docentes de impacto crítico. Si no existen, avanza con los de impacto moderado y luego leve.
+                    </p>
                 </div>
-                <div class="kpi-valor" id="kpi-total-a-tiempo">{{ total_a_tiempo }}</div>
-                <div class="kpi-pie">Cumplimiento normal dentro del análisis actual.</div>
-            </div>
 
-            <div class="kpi">
-                <div class="kpi-superior">
-                    <div class="kpi-etiqueta">Registros sin retiro</div>
-                    <div class="kpi-badge">S</div>
+                <div class="panel-accion-card">
+                    <h3>Foco de seguimiento</h3>
+                    <p id="lectura-foco">
+                        El sistema identificará docentes con mayor recurrencia e impacto acumulado para priorizar revisión.
+                    </p>
                 </div>
-                <div class="kpi-valor" id="kpi-total-sin-retiro">{{ total_sin_retiro }}</div>
-                <div class="kpi-pie">Casos que conviene revisar por trazabilidad.</div>
-            </div>
 
-            <div class="kpi">
-                <div class="kpi-superior">
-                    <div class="kpi-etiqueta">Promedio de atraso (min)</div>
-                    <div class="kpi-badge">M</div>
+                <div class="panel-accion-card">
+                    <h3>Lectura del subconjunto</h3>
+                    <p id="texto-lectura-subconjunto">
+                        El sistema actualizará esta lectura según los datos visibles del subconjunto analizado.
+                    </p>
                 </div>
-                <div class="kpi-valor" id="kpi-promedio-atraso">{{ promedio_atraso }}</div>
-                <div class="kpi-pie">Promedio considerando solo atrasos efectivos.</div>
             </div>
         </section>
 
         <section class="card">
-            <h2 class="titulo-seccion">Filtros del análisis</h2>
-            <p class="texto-apoyo" style="margin-bottom:12px;">
-                Ajusta el subconjunto de análisis para revisar docentes, secciones y estados específicos sin alterar la carga original.
-            </p>
-
-            <div class="bloque-filtros">
+            <div class="card-filtros">
                 <div class="campo">
-                    <label for="filtro-texto">Buscar por docente o asignatura</label>
-                    <input id="filtro-texto" type="text" placeholder="Escribe un nombre o asignatura">
+                    <label for="filtro-programa">Programa de estudio</label>
+                    <select id="filtro-programa">
+                        <option value="">Todos</option>
+                    </select>
                 </div>
 
                 <div class="campo">
@@ -1072,21 +1125,116 @@
                     <label for="filtro-estado">Estado</label>
                     <select id="filtro-estado">
                         <option value="">Todos</option>
+                        <option value="LEVE">Impacto leve</option>
+                        <option value="MEDIO">Impacto moderado</option>
+                        <option value="GRAVE">Impacto crítico</option>
                     </select>
                 </div>
 
                 <div class="campo">
-                    <button type="button" id="boton-limpiar-filtros" class="boton boton-secundario">
-                        Limpiar
-                    </button>
+                    <label for="filtro-texto">Buscar</label>
+                    <input id="filtro-texto" type="text" placeholder="Docente, asignatura, sección, observación">
+                </div>
+
+                <div class="acciones-carga">
+                    <button type="button" id="boton-limpiar-filtros" class="boton boton-secundario">Limpiar</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="ranking-kpis">
+            <div class="card">
+                <div class="encabezado-ranking">
+                    <div>
+                        <h2 class="titulo-seccion">Ranking prioritario</h2>
+                        <p class="subtitulo-tabla">
+                            Esto responde a la pregunta clave: <strong>¿a quién revisar primero?</strong> Haz clic sobre un docente para abrir su análisis específico.
+                        </p>
+                    </div>
+
+                    <div class="controles-ranking">
+                        <div class="campo">
+                            <label for="criterio_orden">Ordenar ranking</label>
+                            <select id="criterio_orden" name="criterio_orden">
+                                <option value="cantidad" {% if criterio_orden == "cantidad" %}selected{% endif %}>Cantidad de atrasos</option>
+                                <option value="minutos" {% if criterio_orden == "minutos" %}selected{% endif %}>Minutos acumulados</option>
+                            </select>
+                        </div>
+
+                        <div class="grupo-toggle">
+                            <button type="button" class="boton-toggle activo" data-limite-ranking="5">Top 5</button>
+                            <button type="button" class="boton-toggle" data-limite-ranking="10">Top 10</button>
+                            <button type="button" class="boton-toggle" data-limite-ranking="todos">Todos</button>
+                        </div>
+
+                        <div class="texto-ranking-visible" id="texto-ranking-visible">
+                            Mostrando los 5 docentes más críticos del subconjunto actual.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabla-ranking-scroll">
+                    <div class="tabla-contenedor">
+                        <table class="tabla">
+                            <thead>
+                                <tr>
+                                    <th>Docente</th>
+                                    <th>Atrasos</th>
+                                    <th>Minutos</th>
+                                    <th>Impacto</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-top-docentes"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="pie-analisis">
+                    El ranking mantiene foco ejecutivo: recurrencia, minutos acumulados y nivel de impacto.
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="titulo-seccion">Indicadores clave</h2>
+                <p class="texto-apoyo" style="margin-bottom:10px;">
+                    Se priorizan solo los indicadores más útiles para decisión directiva.
+                </p>
+
+                <div class="kpis">
+                    <div class="kpi">
+                        <div class="kpi-superior">
+                            <div class="kpi-etiqueta">Registros con atraso</div>
+                            <div class="kpi-badge">A</div>
+                        </div>
+                        <div class="kpi-valor" id="kpi-total-atrasos">{{ total_atrasos }}</div>
+                        <div class="kpi-pie">Casos que requieren atención por atraso efectivo.</div>
+                    </div>
+
+                    <div class="kpi">
+                        <div class="kpi-superior">
+                            <div class="kpi-etiqueta">Docentes prioritarios</div>
+                            <div class="kpi-badge">D</div>
+                        </div>
+                        <div class="kpi-valor" id="kpi-docentes-prioritarios">0</div>
+                        <div class="kpi-pie">Casos que conviene revisar primero.</div>
+                    </div>
+
+                    <div class="kpi">
+                        <div class="kpi-superior">
+                            <div class="kpi-etiqueta">Promedio atraso (min)</div>
+                            <div class="kpi-badge">M</div>
+                        </div>
+                        <div class="kpi-valor" id="kpi-promedio-atraso">{{ promedio_atraso }}</div>
+                        <div class="kpi-pie">Promedio considerando solo atrasos efectivos.</div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="card">
-            <h2 class="titulo-seccion">Insights para toma de decisiones</h2>
-            <p class="texto-apoyo" style="margin-bottom:12px;">
-                Observaciones automáticas construidas a partir de los registros filtrados, orientadas a seguimiento y priorización académica.
+            <h2 class="titulo-seccion">Insights clave</h2>
+            <p class="texto-apoyo" style="margin-bottom:10px;">
+                Observaciones automáticas resumidas para apoyar seguimiento y priorización académica.
             </p>
 
             <div class="insights-grid" id="contenedor-insights">
@@ -1099,94 +1247,29 @@
             </div>
         </section>
 
-        <section class="dos-columnas">
-            <div class="card">
-                <h2 class="titulo-seccion">Ranking prioritario de docentes</h2>
-                <p class="subtitulo-tabla">
-                    Haz clic sobre un docente para abrir su análisis específico. El ranking destaca casos de <span class="numero-destacado">impacto alto o medio</span>.
-                </p>
-
-                <div class="tabla-ranking-scroll">
-                    <div class="tabla-contenedor">
-                        <table class="tabla">
-                            <thead>
-                                <tr>
-                                    <th>Docente</th>
-                                    <th>Cantidad atrasos</th>
-                                    <th>Minutos atraso</th>
-                                    <th>Impacto</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabla-top-docentes">
-                                {% for item in top_docentes %}
-                                <tr class="fila-click" data-docente="{{ item.docente }}">
-                                    <td>{{ item.docente }}</td>
-                                    <td>{{ item.cantidad }}</td>
-                                    <td>{{ item.minutos }}</td>
-                                    <td>
-                                        <span class="semaforo semaforo-{{ item.semaforo }}">
-                                            {{ item.semaforo_texto }}
-                                        </span>
-                                    </td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="4" class="sin-datos">
-                                        No se detectan docentes con impacto prioritario en los filtros actuales.
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="pie-analisis">
-                    El ranking mantiene foco ejecutivo: recurrencia, minutos acumulados y nivel de impacto.
-                </div>
-            </div>
-
-            <div class="card">
-                <h2 class="titulo-seccion">Apoyo a decisión directiva</h2>
-
-                <div class="caja-lectura">
-                    <div class="bloque-recomendacion">
-                        <h4>Cómo leer este bloque</h4>
-                        <p>
-                            <strong>Cantidad de atrasos</strong> muestra recurrencia,
-                            <strong>minutos atraso</strong> refleja impacto acumulado y
-                            <strong>nivel de impacto</strong> resume la prioridad de seguimiento.
-                        </p>
-                    </div>
-
-                    <div class="bloque-recomendacion">
-                        <h4>Acción sugerida</h4>
-                        <p id="texto-accion-sugerida">
-                            Prioriza revisión sobre docentes de alto impacto. Si no existen casos altos, avanza con los casos de impacto medio para seguimiento preventivo.
-                        </p>
-                    </div>
-
-                    <div class="bloque-recomendacion">
-                        <h4>Lectura ejecutiva del subconjunto</h4>
-                        <p id="texto-lectura-subconjunto">
-                            El sistema actualizará esta lectura según los filtros aplicados, facilitando una evaluación más específica por docente, sección o estado.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section class="card panel-docente" id="panel-docente">
             <div class="detalle-titulo">
                 <div>
-                    <h2 class="titulo-seccion">Detalle focalizado por docente</h2>
+                    <h2 class="titulo-seccion">Detalle por docente</h2>
                     <p class="texto-apoyo" id="texto-panel-docente">
-                        Selecciona un docente del ranking para revisar su comportamiento, recurrencia e impacto asociado.
+                        Se muestra el comportamiento del docente seleccionado dentro del subconjunto actual.
                     </p>
                 </div>
-                <div class="detalle-badge">
-                    Docente seleccionado:
-                    <strong id="docente-seleccionado-badge">Ninguno</strong>
+
+                <div class="detalle-acciones">
+                    <div class="detalle-badge">
+                        Docente seleccionado:
+                        <strong id="docente-seleccionado-badge">Ninguno</strong>
+                    </div>
+
+                    <a
+                        id="btn-reporte-docente"
+                        class="boton boton-principal boton-reporte-docente boton-deshabilitado"
+                        href="#"
+                        target="_blank"
+                    >
+                        Generar reporte docente
+                    </a>
                 </div>
             </div>
 
@@ -1202,14 +1285,17 @@
                         <div class="resumen-docente-label">Total registros docente</div>
                         <div class="resumen-docente-valor" id="docente-total-registros">0</div>
                     </div>
+
                     <div class="resumen-docente-item">
                         <div class="resumen-docente-label">Cantidad de atrasos</div>
                         <div class="resumen-docente-valor" id="docente-cantidad-atrasos">0</div>
                     </div>
+
                     <div class="resumen-docente-item">
-                        <div class="resumen-docente-label">Minutos acumulados</div>
-                        <div class="resumen-docente-valor" id="docente-minutos-acumulados">0</div>
+                        <div class="resumen-docente-label">Horas acumuladas</div>
+                        <div class="resumen-docente-valor" id="docente-minutos-acumulados">0 h</div>
                     </div>
+
                     <div class="resumen-docente-item">
                         <div class="resumen-docente-label">Impacto</div>
                         <div class="resumen-docente-valor" id="docente-impacto">-</div>
@@ -1237,14 +1323,19 @@
                 </div>
 
                 <div class="pie-analisis">
-                    Este detalle aparece solo a demanda, para mantener el panel principal limpio y enfocado en la decisión.
+                    Este detalle muestra solo casos desde 5 minutos y se ordena de mayor a menor. Los atrasos menores siguen contando en acumulados y ranking.
                 </div>
             </div>
         </section>
+        {% endif %}
+    </div>
 
-        <script>
-        const datosAnalisis = JSON.parse(document.getElementById("detalle-datos").textContent);
+    {% if total_registros %}
+    <script>
+        const datosVisible = JSON.parse(document.getElementById("detalle-visible-datos").textContent);
+        const datosCompleto = JSON.parse(document.getElementById("detalle-completo-datos").textContent);
 
+        const filtroPrograma = document.getElementById("filtro-programa");
         const filtroTexto = document.getElementById("filtro-texto");
         const filtroDocente = document.getElementById("filtro-docente");
         const filtroSeccion = document.getElementById("filtro-seccion");
@@ -1252,29 +1343,28 @@
         const botonLimpiarFiltros = document.getElementById("boton-limpiar-filtros");
         const criterioOrden = document.getElementById("criterio_orden");
 
-        const kpiTotalRegistros = document.getElementById("kpi-total-registros");
         const kpiTotalAtrasos = document.getElementById("kpi-total-atrasos");
-        const kpiTotalATiempo = document.getElementById("kpi-total-a-tiempo");
-        const kpiTotalSinRetiro = document.getElementById("kpi-total-sin-retiro");
+        const kpiDocentesPrioritarios = document.getElementById("kpi-docentes-prioritarios");
         const kpiPromedioAtraso = document.getElementById("kpi-promedio-atraso");
 
-        const miniTotalRegistros = document.getElementById("mini-total-registros");
         const miniPorcentajeAtraso = document.getElementById("mini-porcentaje-atraso");
         const miniDocentesPrioritarios = document.getElementById("mini-docentes-prioritarios");
         const miniPromedioAtraso = document.getElementById("mini-promedio-atraso");
 
-        const chipEstadoGeneral = document.getElementById("chip-estado-general");
-        const textoEstadoGeneral = document.getElementById("texto-estado-general");
-        const lecturaSeveridad = document.getElementById("lectura-severidad");
+        const alertaPrincipal = document.getElementById("alerta-principal");
+        const etiquetaAlerta = document.getElementById("etiqueta-alerta");
+        const tituloAlerta = document.getElementById("titulo-alerta");
+        const textoAlerta = document.getElementById("texto-alerta");
+
         const lecturaFoco = document.getElementById("lectura-foco");
-        const lecturaRecomendacion = document.getElementById("lectura-recomendacion");
         const textoAccionSugerida = document.getElementById("texto-accion-sugerida");
         const textoLecturaSubconjunto = document.getElementById("texto-lectura-subconjunto");
 
         const contenedorInsights = document.getElementById("contenedor-insights");
         const tablaTopDocentes = document.getElementById("tabla-top-docentes");
+        const textoRankingVisible = document.getElementById("texto-ranking-visible");
+        const botonesToggleRanking = document.querySelectorAll("[data-limite-ranking]");
 
-        const panelDocente = document.getElementById("panel-docente");
         const estadoVacioDocente = document.getElementById("estado-vacio-docente");
         const contenidoDocente = document.getElementById("contenido-docente");
         const docenteSeleccionadoBadge = document.getElementById("docente-seleccionado-badge");
@@ -1285,452 +1375,491 @@
         const docenteMinutosAcumulados = document.getElementById("docente-minutos-acumulados");
         const docenteImpacto = document.getElementById("docente-impacto");
         const tablaDetalleDocente = document.getElementById("tabla-detalle-docente");
+        const btnReporteDocente = document.getElementById("btn-reporte-docente");
 
-        let docenteSeleccionadoActual = "";
+        let datosFiltradosCompleto = [...datosCompleto];
+        let datosFiltradosVisible = [...datosVisible];
+        let docenteSeleccionado = "";
+        let limiteRanking = "5";
 
-        function llenarSelect(select, valores) {
-            const valorActual = select.value;
-            select.innerHTML = '<option value="">Todos</option>';
+        function valorTexto(valor, porDefecto = "-"){
+            if (valor === null || valor === undefined) return porDefecto;
+            const texto = String(valor).trim();
+            return texto ? texto : porDefecto;
+        }
 
-            valores.forEach(valor => {
-                const option = document.createElement("option");
-                option.value = valor;
-                option.textContent = valor;
-                select.appendChild(option);
-            });
+        function normalizarTexto(valor){
+            return valorTexto(valor, "").toLowerCase();
+        }
 
-            if ([...select.options].some(opt => opt.value === valorActual)) {
-                select.value = valorActual;
+        function numeroSeguro(valor){
+            if (valor === null || valor === undefined || valor === "") return 0;
+            if (typeof valor === "number") return Number.isFinite(valor) ? valor : 0;
+
+            const texto = String(valor).trim().replace(",", ".");
+            const numero = Number(texto);
+            return Number.isFinite(numero) ? numero : 0;
+        }
+
+        function horasTexto(minutos){
+            return `${(numeroSeguro(minutos) / 60).toFixed(1)} h`;
+        }
+
+        function obtenerClaseEstado(estado){
+            switch (valorTexto(estado, "").toUpperCase()) {
+                case "LEVE":
+                    return "estado-naranjo";
+                case "MEDIO":
+                case "GRAVE":
+                    return "estado-rojo";
+                case "A_TIEMPO":
+                    return "estado-verde";
+                case "TOLERANCIA":
+                    return "estado-amarillo";
+                default:
+                    return "estado-gris";
             }
         }
 
-        function cargarOpcionesFiltros() {
-            const docentes = [...new Set(
-                datosAnalisis
-                    .map(item => item.docente)
-                    .filter(Boolean)
-            )].sort((a, b) => a.localeCompare(b, "es"));
-
-            const secciones = [...new Set(
-                datosAnalisis
-                    .map(item => item.seccion)
-                    .filter(Boolean)
-            )].sort((a, b) => a.localeCompare(b, "es"));
-
-            const estados = [...new Set(
-                datosAnalisis
-                    .map(item => item.estado)
-                    .filter(Boolean)
-            )].sort((a, b) => a.localeCompare(b, "es"));
-
-            llenarSelect(filtroDocente, docentes);
-            llenarSelect(filtroSeccion, secciones);
-            llenarSelect(filtroEstado, estados);
-        }
-
-        function obtenerTextoEstado(codigo) {
-            const mapa = {
-                "A_TIEMPO": "A tiempo",
-                "TOLERANCIA": "Tolerancia",
-                "LEVE": "Atraso leve",
-                "MEDIO": "Atraso medio",
-                "GRAVE": "Atraso grave",
-                "SIN_RETIRO": "Sin retiro",
-                "SIN_BLOQUE": "Bloque no configurado",
-                "INCONSISTENTE": "Dato inconsistente"
-            };
-            return mapa[codigo] || codigo;
-        }
-
-        function calcularSemaforoDocente(cantidad, minutos) {
-            if (minutos >= 150 || cantidad >= 20) {
-                return { clase: "alto", texto: "Alto impacto" };
+        function obtenerTextoEstado(estado){
+            switch (valorTexto(estado, "").toUpperCase()) {
+                case "LEVE":
+                    return "Impacto leve";
+                case "MEDIO":
+                    return "Impacto moderado";
+                case "GRAVE":
+                    return "Impacto crítico";
+                case "TOLERANCIA":
+                    return "Tolerancia";
+                case "A_TIEMPO":
+                    return "A tiempo";
+                case "SIN_RETIRO":
+                    return "Sin retiro";
+                case "SIN_BLOQUE":
+                    return "Sin bloque";
+                case "INCONSISTENTE":
+                    return "Dato inconsistente";
+                default:
+                    return valorTexto(estado, "-");
             }
-            if (minutos >= 60 || cantidad >= 10) {
-                return { clase: "medio", texto: "Impacto medio" };
+        }
+
+        function impactoPorMinutos(minutos){
+            const valor = numeroSeguro(minutos);
+            if (valor >= 15) return "Crítico";
+            if (valor >= 10) return "Moderado";
+            if (valor >= 5) return "Leve";
+            return "Sin impacto";
+        }
+
+        function semaforoPorMinutos(minutos){
+            const valor = numeroSeguro(minutos);
+            if (valor >= 15) return { clase: "alto", texto: "Impacto crítico" };
+            if (valor >= 10) return { clase: "medio", texto: "Impacto moderado" };
+            return { clase: "bajo", texto: "Impacto leve" };
+        }
+
+        function poblarSelect(select, valores, etiquetaTodos){
+            const actual = select.value;
+            select.innerHTML = `<option value="">${etiquetaTodos}</option>`;
+
+            [...new Set(valores.filter(Boolean))]
+                .sort((a, b) => a.localeCompare(b))
+                .forEach(valor => {
+                    const option = document.createElement("option");
+                    option.value = valor;
+                    option.textContent = valor;
+                    select.appendChild(option);
+                });
+
+            if ([...select.options].some(opt => opt.value === actual)) {
+                select.value = actual;
             }
-            return { clase: "bajo", texto: "Impacto bajo" };
         }
 
-        function filtrarDatos() {
-            const texto = filtroTexto.value.trim().toLowerCase();
-            const docente = filtroDocente.value;
-            const seccion = filtroSeccion.value;
-            const estado = filtroEstado.value;
-
-            return datosAnalisis.filter(item => {
-                const coincideTexto =
-                    !texto ||
-                    (item.docente || "").toLowerCase().includes(texto) ||
-                    (item.asignatura || "").toLowerCase().includes(texto);
-
-                const coincideDocente = !docente || item.docente === docente;
-                const coincideSeccion = !seccion || item.seccion === seccion;
-                const coincideEstado = !estado || item.estado === estado;
-
-                return coincideTexto && coincideDocente && coincideSeccion && coincideEstado;
-            });
-        }
-
-        function construirRanking(datosFiltrados) {
-            const resumen = {};
-            const criterio = criterioOrden ? criterioOrden.value : "cantidad";
-
-            datosFiltrados.forEach(item => {
-                if (item.minutos_atraso !== null && item.minutos_atraso > 0) {
-                    const nombre = item.docente || "Docente sin nombre";
-
-                    if (!resumen[nombre]) {
-                        resumen[nombre] = { cantidad: 0, minutos: 0 };
-                    }
-
-                    resumen[nombre].cantidad += 1;
-                    resumen[nombre].minutos += item.minutos_atraso;
-                }
-            });
-
-            const rankingCompleto = Object.entries(resumen).map(([docente, datos]) => {
-                const semaforo = calcularSemaforoDocente(datos.cantidad, datos.minutos);
-                return {
-                    docente,
-                    cantidad: datos.cantidad,
-                    minutos: datos.minutos,
-                    semaforo: semaforo.clase,
-                    semaforo_texto: semaforo.texto
-                };
-            });
-
-            const rankingPrioritario = rankingCompleto.filter(item =>
-                item.semaforo === "alto" || item.semaforo === "medio"
+        function inicializarFiltros(){
+            poblarSelect(
+                filtroPrograma,
+                datosCompleto.map(item => valorTexto(item.programa_estudio, "")),
+                "Todos"
             );
 
-            rankingPrioritario.sort((a, b) => {
-                if (criterio === "minutos") {
-                    return (b.minutos - a.minutos) || (b.cantidad - a.cantidad);
-                }
-                return (b.cantidad - a.cantidad) || (b.minutos - a.minutos);
+            poblarSelect(
+                filtroDocente,
+                datosCompleto.map(item => valorTexto(item.docente, "")),
+                "Todos"
+            );
+
+            poblarSelect(
+                filtroSeccion,
+                datosCompleto.map(item => valorTexto(item.seccion, "")),
+                "Todas"
+            );
+        }
+
+        function coincideEstado(item){
+            if (!filtroEstado.value) return true;
+            return valorTexto(item.estado, "").toUpperCase() === filtroEstado.value;
+        }
+
+        function coincideTexto(item){
+            const texto = normalizarTexto(filtroTexto.value);
+            if (!texto) return true;
+
+            const contenido = [
+                item.docente,
+                item.asignatura,
+                item.seccion,
+                item.programa_estudio,
+                item.observacion,
+                item.fecha_clase_texto,
+                item.hora_inicio_texto,
+                item.bloque_numero
+            ].map(normalizarTexto).join(" ");
+
+            return contenido.includes(texto);
+        }
+
+        function aplicarFiltros(){
+            datosFiltradosCompleto = datosCompleto.filter(item => {
+                const programaOk = !filtroPrograma.value || valorTexto(item.programa_estudio, "") === filtroPrograma.value;
+                const docenteOk = !filtroDocente.value || valorTexto(item.docente, "") === filtroDocente.value;
+                const seccionOk = !filtroSeccion.value || valorTexto(item.seccion, "") === filtroSeccion.value;
+                const estadoOk = coincideEstado(item);
+                const textoOk = coincideTexto(item);
+                return programaOk && docenteOk && seccionOk && estadoOk && textoOk;
             });
 
-            return rankingPrioritario.slice(0, 5);
+            datosFiltradosVisible = datosVisible.filter(item => {
+                const programaOk = !filtroPrograma.value || valorTexto(item.programa_estudio, "") === filtroPrograma.value;
+                const docenteOk = !filtroDocente.value || valorTexto(item.docente, "") === filtroDocente.value;
+                const seccionOk = !filtroSeccion.value || valorTexto(item.seccion, "") === filtroSeccion.value;
+                const estadoOk = coincideEstado(item);
+                const textoOk = coincideTexto(item);
+                return programaOk && docenteOk && seccionOk && estadoOk && textoOk;
+            });
+
+            renderizarTodo();
         }
 
-        function actualizarKpis(datosFiltrados) {
-            const totalRegistros = datosFiltrados.length;
-            const totalAtrasos = datosFiltrados.filter(item => item.minutos_atraso !== null && item.minutos_atraso > 0).length;
-            const totalATiempo = datosFiltrados.filter(item => item.estado === "A_TIEMPO").length;
-            const totalSinRetiro = datosFiltrados.filter(item => item.estado === "SIN_RETIRO").length;
+        function limpiarFiltros(){
+            filtroPrograma.value = "";
+            filtroDocente.value = "";
+            filtroSeccion.value = "";
+            filtroEstado.value = "";
+            filtroTexto.value = "";
+            docenteSeleccionado = "";
+            datosFiltradosCompleto = [...datosCompleto];
+            datosFiltradosVisible = [...datosVisible];
+            renderizarTodo();
+        }
 
-            const atrasosPositivos = datosFiltrados
-                .filter(item => item.minutos_atraso !== null && item.minutos_atraso > 0)
-                .map(item => item.minutos_atraso);
+        function construirRanking(){
+            const resumen = {};
 
-            const promedio = atrasosPositivos.length
-                ? (atrasosPositivos.reduce((a, b) => a + b, 0) / atrasosPositivos.length).toFixed(1)
-                : "0";
+            datosFiltradosCompleto.forEach(item => {
+                const docente = valorTexto(item.docente, "");
+                const minutos = numeroSeguro(item.minutos_atraso);
 
-            kpiTotalRegistros.textContent = totalRegistros;
+                if (!docente || minutos <= 0) return;
+
+                if (!resumen[docente]) {
+                    resumen[docente] = {
+                        docente,
+                        cantidad: 0,
+                        minutos: 0
+                    };
+                }
+
+                resumen[docente].cantidad += 1;
+                resumen[docente].minutos += minutos;
+            });
+
+            const lista = Object.values(resumen)
+                .filter(item => item.minutos >= 5)
+                .map(item => {
+                    const semaforo = semaforoPorMinutos(item.minutos);
+                    return {
+                        ...item,
+                        semaforo: semaforo.clase,
+                        semaforo_texto: semaforo.texto
+                    };
+                });
+
+            if (criterioOrden.value === "minutos") {
+                lista.sort((a, b) =>
+                    b.minutos - a.minutos ||
+                    b.cantidad - a.cantidad ||
+                    a.docente.localeCompare(b.docente)
+                );
+            } else {
+                lista.sort((a, b) =>
+                    b.cantidad - a.cantidad ||
+                    b.minutos - a.minutos ||
+                    a.docente.localeCompare(b.docente)
+                );
+            }
+
+            return lista;
+        }
+
+        function obtenerRankingVisible(rankingCompleto){
+            if (limiteRanking === "todos") return rankingCompleto;
+            return rankingCompleto.slice(0, Number(limiteRanking));
+        }
+
+        function actualizarIndicadores(rankingCompleto){
+            const totalAtrasos = datosFiltradosCompleto.filter(item => numeroSeguro(item.minutos_atraso) > 0).length;
+            const sumaMinutos = datosFiltradosCompleto.reduce((acc, item) => acc + numeroSeguro(item.minutos_atraso), 0);
+            const promedio = totalAtrasos ? (sumaMinutos / totalAtrasos).toFixed(1) : "0.0";
+            const docentesPrioritarios = rankingCompleto.length;
+            const totalRegistros = datosFiltradosCompleto.length;
+            const porcentaje = totalRegistros ? ((totalAtrasos / totalRegistros) * 100).toFixed(1) : "0.0";
+
             kpiTotalAtrasos.textContent = totalAtrasos;
-            kpiTotalATiempo.textContent = totalATiempo;
-            kpiTotalSinRetiro.textContent = totalSinRetiro;
+            kpiDocentesPrioritarios.textContent = docentesPrioritarios;
             kpiPromedioAtraso.textContent = promedio;
 
-            miniTotalRegistros.textContent = totalRegistros;
+            miniDocentesPrioritarios.textContent = docentesPrioritarios;
+            miniPorcentajeAtraso.textContent = `${porcentaje}%`;
             miniPromedioAtraso.textContent = promedio;
+
+            let estado = "controlado";
+            let titulo = "Situación controlada";
+            let texto = "La carga actual presenta una situación manejable, con seguimiento acotado y sin concentración crítica relevante.";
+            let accion = "Mantén seguimiento preventivo y monitorea cualquier incremento de recurrencia.";
+            let foco = "El subconjunto actual no presenta señales de alarma significativas.";
+            let lectura = `Se observan ${totalAtrasos} registros con atraso dentro de ${totalRegistros} registros del subconjunto actual.`;
+
+            const hayCritico = rankingCompleto.some(item => item.minutos >= 15);
+            const hayModerado = rankingCompleto.some(item => item.minutos >= 10);
+
+            if (hayCritico || Number(porcentaje) >= 35 || Number(promedio) >= 15) {
+                estado = "critico";
+                titulo = "Situación crítica";
+                texto = "Existe concentración relevante de atrasos y conviene intervenir de manera prioritaria.";
+                accion = "Prioriza revisión inmediata sobre los docentes con mayor acumulación de minutos y recurrencia.";
+                foco = "El subconjunto actual concentra atrasos altos y requiere seguimiento directivo cercano.";
+            } else if (hayModerado || Number(porcentaje) >= 15 || Number(promedio) >= 10) {
+                estado = "atencion";
+                titulo = "Situación en atención";
+                texto = "El subconjunto actual presenta señales que ameritan seguimiento preventivo y priorización por impacto.";
+                accion = "Enfoca la revisión en los docentes moderados y críticos antes de que la situación escale.";
+                foco = "Se observa una concentración intermedia de atrasos que conviene monitorear.";
+            }
+
+            alertaPrincipal.className = `alerta-principal ${estado}`;
+            etiquetaAlerta.className = `alerta-etiqueta ${estado}`;
+            etiquetaAlerta.textContent = titulo;
+            tituloAlerta.textContent = titulo;
+            textoAlerta.textContent = texto;
+            textoAccionSugerida.textContent = accion;
+            lecturaFoco.textContent = foco;
+            textoLecturaSubconjunto.textContent = lectura;
         }
 
-        function construirInsights(datosFiltrados) {
-            const totalRegistros = datosFiltrados.length;
-            const totalAtrasos = datosFiltrados.filter(item => item.minutos_atraso !== null && item.minutos_atraso > 0).length;
-            const totalATiempo = datosFiltrados.filter(item => item.estado === "A_TIEMPO").length;
-            const totalSinRetiro = datosFiltrados.filter(item => item.estado === "SIN_RETIRO").length;
-            const totalSinBloque = datosFiltrados.filter(item => item.estado === "SIN_BLOQUE").length;
+        function renderizarInsights(rankingCompleto){
+            const totalRegistros = datosFiltradosCompleto.length;
+            const totalAtrasos = datosFiltradosCompleto.filter(item => numeroSeguro(item.minutos_atraso) > 0).length;
+            const sumaMinutos = datosFiltradosCompleto.reduce((acc, item) => acc + numeroSeguro(item.minutos_atraso), 0);
+            const promedio = totalAtrasos ? (sumaMinutos / totalAtrasos).toFixed(1) : "0.0";
+            const sinRetiro = datosFiltradosCompleto.filter(item => valorTexto(item.estado, "").toUpperCase() === "SIN_RETIRO").length;
 
-            const atrasosPositivos = datosFiltrados
-                .filter(item => item.minutos_atraso !== null && item.minutos_atraso > 0)
-                .map(item => item.minutos_atraso);
-
-            const promedio = atrasosPositivos.length
-                ? (atrasosPositivos.reduce((a, b) => a + b, 0) / atrasosPositivos.length).toFixed(1)
-                : "0";
-
-            const porcentajeAtraso = totalRegistros ? ((totalAtrasos / totalRegistros) * 100).toFixed(1) : "0.0";
-            const porcentajeATiempo = totalRegistros ? ((totalATiempo / totalRegistros) * 100).toFixed(1) : "0.0";
-            const porcentajeSinRetiro = totalRegistros ? ((totalSinRetiro / totalRegistros) * 100).toFixed(1) : "0.0";
-            const porcentajeSinBloque = totalRegistros ? ((totalSinBloque / totalRegistros) * 100).toFixed(1) : "0.0";
-
-            const ranking = construirRanking(datosFiltrados);
-
-            const insights = [
+            const bloques = [
                 {
                     titulo: "Panorama general",
-                    texto: `Con los filtros actuales se observan ${totalRegistros} registros. El ${porcentajeAtraso}% presenta atraso, el ${porcentajeATiempo}% está a tiempo, el ${porcentajeSinRetiro}% aparece sin retiro y el ${porcentajeSinBloque}% quedó sin bloque asociado.`
+                    texto: `El subconjunto actual reúne ${totalRegistros} registros y ${totalAtrasos} presentan atraso efectivo.`
                 },
                 {
                     titulo: "Promedio de atraso",
-                    texto: `El promedio de atraso del subconjunto analizado es de ${promedio} minutos. Este valor ayuda a distinguir si la situación observada es leve, moderada o crítica.`
+                    texto: `El promedio de atraso observado es de ${promedio} minutos.`
                 }
             ];
 
-            if (ranking.length) {
-                insights.push({
-                    titulo: "Docente con mayor impacto",
-                    texto: `${ranking[0].docente} lidera el análisis con ${ranking[0].cantidad} atrasos y ${ranking[0].minutos} minutos acumulados. Su nivel de impacto se clasifica como ${ranking[0].semaforo_texto.toLowerCase()}.`
+            if (rankingCompleto.length > 0) {
+                bloques.push({
+                    titulo: "Caso más visible",
+                    texto: `${rankingCompleto[0].docente} lidera el ranking actual con ${rankingCompleto[0].cantidad} atrasos y ${Math.round(rankingCompleto[0].minutos)} minutos acumulados.`
                 });
             }
 
-            if (totalSinRetiro > 0) {
-                insights.push({
+            if (sinRetiro > 0) {
+                bloques.push({
                     titulo: "Registros sin retiro",
-                    texto: `Se detectaron ${totalSinRetiro} registros sin retiro. Conviene revisar estos casos por separado para mejorar trazabilidad y consistencia del análisis.`
+                    texto: `Se observaron ${sinRetiro} registros sin retiro. Conviene revisarlos por separado.`
                 });
             }
 
-            if (totalSinBloque > 0) {
-                insights.push({
-                    titulo: "Registros sin bloque asociado",
-                    texto: `Se detectaron ${totalSinBloque} registros que no pudieron asociarse a un bloque. Esto puede ocurrir por diferencias de formato en el Excel o por necesidad de homologación horaria.`
-                });
-            }
-
-            contenedorInsights.innerHTML = "";
-            insights.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "insight";
-                div.innerHTML = `
+            contenedorInsights.innerHTML = bloques.map(item => `
+                <div class="insight">
                     <h4>${item.titulo}</h4>
                     <p>${item.texto}</p>
-                `;
-                contenedorInsights.appendChild(div);
-            });
+                </div>
+            `).join("");
         }
 
-        function marcarFilaActiva(docente) {
-            const filas = tablaTopDocentes.querySelectorAll(".fila-click");
-            filas.forEach(fila => {
-                const nombre = fila.getAttribute("data-docente") || "";
-                if (nombre === docente) {
-                    fila.classList.add("activa");
-                } else {
-                    fila.classList.remove("activa");
-                }
-            });
-        }
-
-        function limpiarDetalleDocente() {
-            docenteSeleccionadoActual = "";
-            panelDocente.classList.remove("visible");
-            docenteSeleccionadoBadge.textContent = "Ninguno";
-            textoPanelDocente.textContent = "Selecciona un docente del ranking para revisar su comportamiento, recurrencia e impacto asociado.";
-            estadoVacioDocente.style.display = "block";
-            contenidoDocente.style.display = "none";
-            tablaDetalleDocente.innerHTML = "";
-            marcarFilaActiva("");
-        }
-
-        function mostrarDetalleDocente(docente, datosFiltrados) {
+        function actualizarBotonReporte(docente){
             if (!docente) {
-                limpiarDetalleDocente();
+                btnReporteDocente.href = "#";
+                btnReporteDocente.classList.add("boton-deshabilitado");
                 return;
             }
 
-            const datosDocente = datosFiltrados.filter(item => (item.docente || "") === docente);
+            btnReporteDocente.href = `{% url 'atrasos:reporte_docente' %}?docente=${encodeURIComponent(docente)}`;
+            btnReporteDocente.classList.remove("boton-deshabilitado");
+        }
 
-            if (!datosDocente.length) {
-                limpiarDetalleDocente();
+        function renderizarDetalleDocente(docente){
+            if (!docente) {
+                docenteSeleccionadoBadge.textContent = "Ninguno";
+                estadoVacioDocente.style.display = "block";
+                contenidoDocente.style.display = "none";
+                tablaDetalleDocente.innerHTML = "";
+                actualizarBotonReporte("");
                 return;
             }
 
-            const atrasosDocente = datosDocente.filter(item => item.minutos_atraso !== null && item.minutos_atraso > 0);
-            const minutosAcumulados = atrasosDocente.reduce((acc, item) => acc + (item.minutos_atraso || 0), 0);
-            const cantidadAtrasos = atrasosDocente.length;
-            const semaforo = calcularSemaforoDocente(cantidadAtrasos, minutosAcumulados);
+            const registrosVisible = datosFiltradosVisible
+                .filter(item => valorTexto(item.docente, "") === docente)
+                .sort((a, b) => numeroSeguro(b.minutos_atraso) - numeroSeguro(a.minutos_atraso));
 
-            docenteSeleccionadoActual = docente;
-            panelDocente.classList.add("visible");
+            const registrosCompleto = datosFiltradosCompleto
+                .filter(item => valorTexto(item.docente, "") === docente);
+
+            if (!registrosCompleto.length) {
+                docenteSeleccionado = "";
+                renderizarDetalleDocente("");
+                return;
+            }
+
+            const totalRegistros = registrosCompleto.length;
+            const cantidadAtrasos = registrosCompleto.filter(item => numeroSeguro(item.minutos_atraso) > 0).length;
+            const minutos = registrosCompleto.reduce((acc, item) => acc + numeroSeguro(item.minutos_atraso), 0);
+            const impacto = impactoPorMinutos(minutos);
+
             docenteSeleccionadoBadge.textContent = docente;
-            textoPanelDocente.textContent = `Se presenta el análisis específico del docente seleccionado, para apoyar seguimiento focalizado y revisión de recurrencia.`;
+            textoPanelDocente.textContent = `Se muestra el comportamiento del docente ${docente} dentro del subconjunto actual.`;
+            resumenDocenteTexto.textContent = `${docente} presenta ${cantidadAtrasos} atrasos efectivos y acumula ${Math.round(minutos)} minutos dentro del subconjunto filtrado.`;
 
-            resumenDocenteTexto.textContent = `${docente} registra ${cantidadAtrasos} atrasos efectivos y ${minutosAcumulados} minutos acumulados en el subconjunto actual. Su comportamiento se clasifica como ${semaforo.texto.toLowerCase()}.`;
-            docenteTotalRegistros.textContent = datosDocente.length;
+            docenteTotalRegistros.textContent = totalRegistros;
             docenteCantidadAtrasos.textContent = cantidadAtrasos;
-            docenteMinutosAcumulados.textContent = minutosAcumulados;
-            docenteImpacto.textContent = semaforo.texto;
+            docenteMinutosAcumulados.textContent = horasTexto(minutos);
+            docenteImpacto.textContent = impacto;
 
-            tablaDetalleDocente.innerHTML = "";
-
-            datosDocente
-                .filter(item => item.estado !== "A_TIEMPO")
-                .forEach(item => {
-                    const tr = document.createElement("tr");
-                    tr.innerHTML = `
-                        <td>${item.fecha_clase_texto || "-"}</td>
-                        <td>${item.asignatura || "-"}</td>
-                        <td>${item.seccion || "-"}</td>
-                        <td>${item.bloque_numero ?? "-"}</td>
-                        <td>${item.hora_inicio_bloque || "-"}</td>
-                        <td>${item.minutos_atraso ?? "-"}</td>
-                        <td><span class="estado estado-${item.color_estado}">${item.estado_texto || obtenerTextoEstado(item.estado)}</span></td>
-                        <td>${item.observacion || "-"}</td>
-                    `;
-                    tablaDetalleDocente.appendChild(tr);
-                });
-
-            if (!tablaDetalleDocente.innerHTML.trim()) {
+            if (!registrosVisible.length) {
                 tablaDetalleDocente.innerHTML = `
                     <tr>
-                        <td colspan="8" class="sin-datos">El docente seleccionado no presenta registros distintos de "A tiempo" con los filtros actuales.</td>
+                        <td colspan="8" class="sin-datos">
+                            El docente seleccionado no presenta atrasos visibles de 5 minutos o más en el subconjunto actual.
+                        </td>
                     </tr>
                 `;
+            } else {
+                tablaDetalleDocente.innerHTML = registrosVisible.map(item => `
+                    <tr>
+                        <td>${valorTexto(item.fecha_clase_texto)}</td>
+                        <td>${valorTexto(item.asignatura)}</td>
+                        <td>${valorTexto(item.seccion)}</td>
+                        <td>${valorTexto(item.bloque_numero)}</td>
+                        <td>${valorTexto(item.hora_inicio_texto)}</td>
+                        <td>${Math.round(numeroSeguro(item.minutos_atraso))}</td>
+                        <td><span class="estado ${obtenerClaseEstado(item.estado)}">${obtenerTextoEstado(item.estado)}</span></td>
+                        <td>${valorTexto(item.observacion)}</td>
+                    </tr>
+                `).join("");
             }
 
             estadoVacioDocente.style.display = "none";
             contenidoDocente.style.display = "block";
-            marcarFilaActiva(docente);
-            panelDocente.scrollIntoView({ behavior: "smooth", block: "start" });
+            actualizarBotonReporte(docente);
         }
 
-        function actualizarRanking(datosFiltrados) {
-            const ranking = construirRanking(datosFiltrados);
-
-            tablaTopDocentes.innerHTML = "";
-
-            if (!ranking.length) {
+        function renderizarRanking(rankingVisible){
+            if (!rankingVisible.length) {
                 tablaTopDocentes.innerHTML = `
                     <tr>
-                        <td colspan="4" class="sin-datos">No se detectan docentes con impacto prioritario en los filtros actuales.</td>
+                        <td colspan="4" class="sin-datos">
+                            No se detectan docentes con impacto prioritario en los filtros actuales.
+                        </td>
                     </tr>
                 `;
-                return ranking;
+                textoRankingVisible.textContent = "No hay docentes prioritarios en el subconjunto actual.";
+                return;
             }
 
-            ranking.forEach(item => {
-                const tr = document.createElement("tr");
-                tr.className = "fila-click";
-                tr.setAttribute("data-docente", item.docente);
-                tr.innerHTML = `
+            tablaTopDocentes.innerHTML = rankingVisible.map(item => `
+                <tr class="fila-click ${item.docente === docenteSeleccionado ? "activa" : ""}" data-docente="${item.docente}">
                     <td>${item.docente}</td>
                     <td>${item.cantidad}</td>
-                    <td>${item.minutos}</td>
+                    <td>${Math.round(item.minutos)}</td>
                     <td><span class="semaforo semaforo-${item.semaforo}">${item.semaforo_texto}</span></td>
-                `;
+                </tr>
+            `).join("");
 
-                tr.addEventListener("click", () => {
-                    const datosActuales = filtrarDatos();
-                    mostrarDetalleDocente(item.docente, datosActuales);
-                });
-
-                tablaTopDocentes.appendChild(tr);
-            });
-
-            return ranking;
-        }
-
-        function actualizarLecturaEjecutiva(datosFiltrados, ranking) {
-            const totalRegistros = datosFiltrados.length;
-            const totalAtrasos = datosFiltrados.filter(item => item.minutos_atraso !== null && item.minutos_atraso > 0).length;
-            const totalSinRetiro = datosFiltrados.filter(item => item.estado === "SIN_RETIRO").length;
-            const atrasosPositivos = datosFiltrados
-                .filter(item => item.minutos_atraso !== null && item.minutos_atraso > 0)
-                .map(item => item.minutos_atraso);
-
-            const minutosAcumulados = atrasosPositivos.reduce((a, b) => a + b, 0);
-            const promedio = atrasosPositivos.length
-                ? (minutosAcumulados / atrasosPositivos.length).toFixed(1)
-                : "0.0";
-
-            const porcentajeAtraso = totalRegistros
-                ? ((totalAtrasos / totalRegistros) * 100)
-                : 0;
-
-            const docentesPrioritarios = ranking.length;
-            miniPorcentajeAtraso.textContent = `${porcentajeAtraso.toFixed(1)}%`;
-            miniDocentesPrioritarios.textContent = docentesPrioritarios;
-
-            let nivel = "controlado";
-            let tituloEstado = "Situación controlada";
-            let descripcionEstado = "La carga actual presenta una situación manejable, con seguimiento acotado y sin concentración crítica relevante.";
-            let textoSeveridad = `Se observa un ${porcentajeAtraso.toFixed(1)}% de registros con atraso. La severidad general se mantiene en un nivel controlado.`;
-            let textoFoco = docentesPrioritarios > 0
-                ? `Se identifican ${docentesPrioritarios} docentes prioritarios, pero el escenario aún permite seguimiento focalizado sin presión crítica.`
-                : "No se observan docentes de impacto prioritario en el subconjunto actual.";
-            let textoRecomendado = totalSinRetiro > 0
-                ? "Mantener monitoreo y revisar en paralelo los registros sin retiro para fortalecer trazabilidad."
-                : "Mantener monitoreo preventivo y seguimiento regular sobre casos con atraso efectivo.";
-            let accionSugerida = "Se recomienda seguimiento preventivo y revisión puntual sobre casos reiterados, sin requerir una intervención masiva.";
-            let lecturaSubconjunto = `El subconjunto filtrado acumula ${minutosAcumulados} minutos de atraso efectivo, con un promedio de ${promedio} minutos por caso con atraso.`;
-
-            if (porcentajeAtraso >= 35 || minutosAcumulados >= 180 || docentesPrioritarios >= 3) {
-                nivel = "critico";
-                tituloEstado = "Situación crítica";
-                descripcionEstado = "La carga actual muestra concentración relevante de atrasos y requiere seguimiento prioritario desde gestión académica.";
-                textoSeveridad = `Se observa un ${porcentajeAtraso.toFixed(1)}% de registros con atraso y ${minutosAcumulados} minutos acumulados. El nivel de severidad es crítico.`;
-                textoFoco = docentesPrioritarios > 0
-                    ? `Existen ${docentesPrioritarios} docentes con impacto prioritario. Conviene activar seguimiento inmediato sobre los casos de mayor recurrencia e impacto.`
-                    : "Aunque no se detectan docentes prioritarios por ranking, la carga mantiene señales críticas por volumen o minutos acumulados.";
-                textoRecomendado = "Se recomienda priorizar revisión inmediata, coordinar seguimiento con jefatura y verificar causas de recurrencia en los casos más severos.";
-                accionSugerida = "Acción sugerida: revisar primero los docentes de alto impacto, validar reincidencia y definir medidas de seguimiento académico-operativo.";
-            } else if (porcentajeAtraso >= 18 || minutosAcumulados >= 80 || docentesPrioritarios >= 1) {
-                nivel = "atencion";
-                tituloEstado = "Situación de atención";
-                descripcionEstado = "La carga muestra señales que ameritan monitoreo activo y priorización de casos con impacto medio o alto.";
-                textoSeveridad = `Se observa un ${porcentajeAtraso.toFixed(1)}% de registros con atraso. La severidad general se ubica en un nivel de atención.`;
-                textoFoco = docentesPrioritarios > 0
-                    ? `Se identifican ${docentesPrioritarios} docentes prioritarios, por lo que conviene concentrar seguimiento en esos casos antes de ampliar revisión.`
-                    : "No hay concentración crítica, pero el volumen observado amerita monitoreo activo.";
-                textoRecomendado = "Se recomienda seguimiento focalizado, revisión de reincidencia y análisis preventivo antes de que la situación escale.";
-                accionSugerida = "Acción sugerida: monitorear docentes de impacto medio y revisar si los atrasos se concentran en determinados bloques, jornadas o asignaturas.";
-            }
-
-            chipEstadoGeneral.className = `estado-chip estado-chip-${nivel}`;
-            chipEstadoGeneral.textContent = tituloEstado;
-
-            textoEstadoGeneral.textContent = descripcionEstado;
-            lecturaSeveridad.textContent = textoSeveridad;
-            lecturaFoco.textContent = textoFoco;
-            lecturaRecomendacion.textContent = textoRecomendado;
-            textoAccionSugerida.textContent = accionSugerida;
-            textoLecturaSubconjunto.textContent = lecturaSubconjunto;
-        }
-
-        function aplicarFiltros() {
-            const datosFiltrados = filtrarDatos();
-            actualizarKpis(datosFiltrados);
-            const ranking = actualizarRanking(datosFiltrados);
-            construirInsights(datosFiltrados);
-            actualizarLecturaEjecutiva(datosFiltrados, ranking || []);
-
-            if (docenteSeleccionadoActual) {
-                const docenteSigueVisible = datosFiltrados.some(item => (item.docente || "") === docenteSeleccionadoActual);
-                if (docenteSigueVisible) {
-                    mostrarDetalleDocente(docenteSeleccionadoActual, datosFiltrados);
-                } else {
-                    limpiarDetalleDocente();
-                }
+            if (limiteRanking === "todos") {
+                textoRankingVisible.textContent = `Mostrando ${rankingVisible.length} docentes del subconjunto actual.`;
             } else {
-                limpiarDetalleDocente();
+                textoRankingVisible.textContent = `Mostrando ${Math.min(Number(limiteRanking), rankingVisible.length)} docentes más críticos del subconjunto actual.`;
             }
         }
 
-        function limpiarFiltros() {
-            filtroTexto.value = "";
-            filtroDocente.value = "";
-            filtroSeccion.value = "";
-            filtroEstado.value = "";
-            aplicarFiltros();
+        function seleccionarDocente(docente){
+            docenteSeleccionado = docente;
+            const rankingCompleto = construirRanking();
+            const rankingVisible = obtenerRankingVisible(rankingCompleto);
+            renderizarRanking(rankingVisible);
+            renderizarDetalleDocente(docenteSeleccionado);
         }
 
-        filtroTexto.addEventListener("input", aplicarFiltros);
+        function renderizarTodo(){
+            const rankingCompleto = construirRanking();
+            const rankingVisible = obtenerRankingVisible(rankingCompleto);
+
+            actualizarIndicadores(rankingCompleto);
+            renderizarRanking(rankingVisible);
+            renderizarInsights(rankingCompleto);
+
+            const sigueVisible = docenteSeleccionado &&
+                rankingCompleto.some(item => item.docente === docenteSeleccionado);
+
+            if (sigueVisible) {
+                renderizarDetalleDocente(docenteSeleccionado);
+            } else if (rankingVisible.length > 0) {
+                docenteSeleccionado = rankingVisible[0].docente;
+                renderizarRanking(rankingVisible);
+                renderizarDetalleDocente(docenteSeleccionado);
+            } else {
+                docenteSeleccionado = "";
+                renderizarDetalleDocente("");
+            }
+        }
+
+        inicializarFiltros();
+        renderizarTodo();
+
+        filtroPrograma.addEventListener("change", aplicarFiltros);
         filtroDocente.addEventListener("change", aplicarFiltros);
         filtroSeccion.addEventListener("change", aplicarFiltros);
         filtroEstado.addEventListener("change", aplicarFiltros);
-        criterioOrden.addEventListener("change", aplicarFiltros);
+        filtroTexto.addEventListener("input", aplicarFiltros);
         botonLimpiarFiltros.addEventListener("click", limpiarFiltros);
+        criterioOrden.addEventListener("change", renderizarTodo);
 
-        cargarOpcionesFiltros();
-        aplicarFiltros();
-        </script>
-        {% endif %}
-    </div>
+        botonesToggleRanking.forEach(boton => {
+            boton.addEventListener("click", () => {
+                botonesToggleRanking.forEach(item => item.classList.remove("activo"));
+                boton.classList.add("activo");
+                limiteRanking = boton.dataset.limiteRanking;
+                renderizarTodo();
+            });
+        });
 
+        tablaTopDocentes.addEventListener("click", (event) => {
+            const fila = event.target.closest("tr[data-docente]");
+            if (!fila) return;
+            seleccionarDocente(fila.dataset.docente);
+        });
+    </script>
+    {% endif %}
 </body>
 </html>

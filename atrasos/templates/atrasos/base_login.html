@@ -1,0 +1,49 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Acceso · Control de Atrasos Docentes{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'atrasos/css/login.css' %}">
+</head>
+
+<body class="login-body">
+
+    <main class="login-shell">
+
+        <section class="login-hero">
+            <div class="login-hero__overlay"></div>
+
+            <div class="login-hero__content">
+                <div class="login-brand">
+                    <div class="login-brand__mark">INACAP</div>
+                    <div class="login-brand__campus">Arica</div>
+                </div>
+
+                <div class="login-hero__copy">
+                    <div class="login-hero__eyebrow">Sistema institucional</div>
+
+                    <h1 class="login-hero__title">
+                        Control de Atrasos Docentes
+                    </h1>
+
+                    <p class="login-hero__text">
+                        Plataforma de apoyo para Dirección Académica y Coordinación,
+                        enfocada en seguimiento ejecutivo, control de cumplimiento docente
+                        y priorización de casos críticos.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="login-panel">
+            {% block contenido_login %}
+            {% endblock %}
+        </section>
+
+    </main>
+
+</body>
+</html>
