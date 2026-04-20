@@ -1,0 +1,336 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Acceso{% endblock %}</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --rojo-inacap: #d90416;
+            --rojo-inacap-dark: #b40312;
+            --azul-izq-1: #111b4d;
+            --azul-izq-2: #060d24;
+            --azul-der-1: #1c2a40;
+            --azul-der-2: #131c2d;
+            --gris-card: #f8fafc;
+            --texto: #0f172a;
+            --texto-suave: #64748b;
+            --borde: #d9e2ec;
+            --sombra: 0 24px 60px rgba(0, 0, 0, 0.24);
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b1320;
+            color: var(--texto);
+        }
+
+        .layout {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+        }
+
+        .lado-izq {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at top left, rgba(217, 4, 22, 0.16), transparent 28%),
+                linear-gradient(135deg, var(--azul-izq-1) 0%, var(--azul-izq-2) 78%);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 56px 64px;
+        }
+
+        .lado-izq__contenido {
+            width: 100%;
+            max-width: 560px;
+        }
+
+        .marca {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: 0.02em;
+            line-height: 1;
+            margin: 0 0 26px 0;
+        }
+
+        .sede {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 999px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffffff;
+            background: rgba(255,255,255,0.04);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+            margin-bottom: 28px;
+        }
+
+        .titulo-principal {
+            margin: 0 0 18px 0;
+            font-size: clamp(2.2rem, 4vw, 4rem);
+            line-height: 1.04;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            max-width: 520px;
+        }
+
+        .descripcion-principal {
+            margin: 0;
+            max-width: 560px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.88);
+        }
+
+        .lado-der {
+            background:
+                radial-gradient(circle at bottom center, rgba(217, 4, 22, 0.10), transparent 28%),
+                linear-gradient(135deg, var(--azul-der-1) 0%, var(--azul-der-2) 78%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 28px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255,255,255,0.96);
+            border-radius: 28px;
+            box-shadow: var(--sombra);
+            padding: 32px 28px 26px;
+            backdrop-filter: blur(6px);
+        }
+
+        .login-card__head {
+            margin-bottom: 20px;
+        }
+
+        .login-card__eyebrow {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--rojo-inacap);
+            margin-bottom: 10px;
+        }
+
+        .login-card__title {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            line-height: 1.05;
+            font-weight: 900;
+            color: #0f172a;
+            letter-spacing: -0.03em;
+        }
+
+        .login-card__subtitle {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.55;
+            color: var(--texto-suave);
+        }
+
+        .login-messages {
+            margin: 0 0 16px 0;
+        }
+
+        .login-alert {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+            border-radius: 14px;
+            padding: 12px 14px;
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .login-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .login-field label {
+            font-size: 0.98rem;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .login-field input {
+            width: 100%;
+            height: 50px;
+            border-radius: 16px;
+            border: 1px solid var(--borde);
+            background: #ffffff;
+            padding: 0 16px;
+            font-size: 1rem;
+            color: #0f172a;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .login-field input::placeholder {
+            color: #94a3b8;
+        }
+
+        .login-field input:focus {
+            border-color: rgba(217, 4, 22, 0.55);
+            box-shadow: 0 0 0 4px rgba(217, 4, 22, 0.10);
+        }
+
+        .login-submit {
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(180deg, var(--rojo-inacap) 0%, var(--rojo-inacap-dark) 100%);
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 900;
+            cursor: pointer;
+            margin-top: 2px;
+            box-shadow: 0 10px 22px rgba(217, 4, 22, 0.22);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+
+        .login-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 28px rgba(217, 4, 22, 0.28);
+        }
+
+        .login-submit:active {
+            transform: translateY(0);
+        }
+
+        .login-links {
+            margin-top: 14px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .login-links a {
+            font-size: 13px;
+            color: #6b7280;
+            text-decoration: none;
+        }
+
+        .login-links a:hover {
+            color: #374151;
+            text-decoration: underline;
+        }
+
+        .login-footer-note {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 0.92rem;
+            color: #64748b;
+        }
+
+        @media (max-width: 1100px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .lado-izq {
+                min-height: 40vh;
+                padding: 42px 28px 30px;
+            }
+
+            .lado-der {
+                padding: 24px 20px 36px;
+            }
+
+            .marca {
+                font-size: 3rem;
+            }
+
+            .titulo-principal {
+                font-size: 2.5rem;
+                max-width: 100%;
+            }
+
+            .descripcion-principal {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .lado-izq {
+                padding: 32px 20px 24px;
+            }
+
+            .lado-der {
+                padding: 18px 14px 28px;
+            }
+
+            .login-card {
+                padding: 24px 18px 22px;
+                border-radius: 22px;
+            }
+
+            .login-card__title {
+                font-size: 1.9rem;
+            }
+
+            .marca {
+                font-size: 2.4rem;
+            }
+
+            .titulo-principal {
+                font-size: 2rem;
+            }
+
+            .descripcion-principal {
+                font-size: 0.98rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <div class="lado-izq">
+            <div class="lado-izq__contenido">
+                <h1 class="marca">INACAP</h1>
+
+                <div class="sede">Sistema institucional</div>
+
+                <h2 class="titulo-principal">Control de Atrasos Docentes</h2>
+
+                <p class="descripcion-principal">
+                    Plataforma de apoyo para Dirección Académica y Coordinación,
+                    enfocada en seguimiento ejecutivo, control de cumplimiento docente
+                    y priorización de casos críticos.
+                </p>
+            </div>
+        </div>
+
+        <div class="lado-der">
+            {% block contenido_login %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>
